@@ -1,0 +1,318 @@
+@model JourneyViewModel
+@{
+    var project = Model.Project;
+    var step = Model.Step;
+    var monthly = ((project.PriceUsd - 100) / 24m).ToString("0.00");
+    var productName = Lang.T(project.ProductNameEn, project.ProductNameEs);
+    var labels = new[]
+    {
+        Lang.T("Project", "Proyecto"),
+        Lang.T("Inspection", "Inspección"),
+        Lang.T("Scope", "Alcance"),
+        Lang.T("Payment", "Pago"),
+        Lang.T("Review", "Revisión"),
+        Lang.T("Schedule", "Agenda"),
+        Lang.T("Confirmation", "Confirmación")
+    };
+    ViewData["Title"] = labels[step];
+}
+@await Html.PartialAsync("_SandboxBanner")
+<section class="journey pad" id="checkout">
+    <div class="heading">
+        <p>@Lang.T("SAFE PROJECT PATH · INTERACTIVE PROTOTYPE", "RUTA SAFE PROJECT · PROTOTIPO INTERACTIVO")</p>
+        <h2>@Lang.T("See every screen before the real system is built.", "Mira cada pantalla antes de construir el sistema real.")</h2>
+        <div>@Lang.T("This simulated processor connects product selection, inspection, scope approval, payment choice, scheduling, and warranty records. It never asks for a Social Security number or card.", "Este procesador simulado conecta selección, inspección, aprobación del alcance, forma de pago, agenda y registro de garantías. Nunca solicita Seguro Social ni tarjeta.")</div>
+    </div>
+    <div class="journeyShell">
+        <ol class="stepper">
+            @for (var i = 0; i < labels.Length; i++)
+            {
+                var cls = i == step ? "active" : i < step ? "done" : "";
+                <li class="@cls"><b>@(i < step ? "✓" : $"{i + 1}")</b><span>@labels[i]</span></li>
+            }
+        </ol>
+        <div class="screen">
+            <div class="screenTop">
+                <span>SAFE SECURE FLOW</span>
+                <small>🔒 @Lang.T("Prototype · no sensitive data", "Prototipo · sin datos sensibles")</small>
+            </div>
+
+            <form method="post" asp-action="Advance" asp-route-id="@project.Id" asp-route-step="@step" data-journey>
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="InspectPath" value="@project.InspectPath" data-inspect />
+                <input type="hidden" name="PaymentPath" value="@project.PaymentPath" data-pay-path />
+
+                @if (step == 0)
+                {
+                    <div class="screenBody">
+                        <span class="eyebrow">01 · @Lang.T("PROJECT DETAILS", "DATOS DEL PROYECTO")</span>
+                        <h3>@Lang.T("Confirm what the customer selected", "Confirma lo que seleccionó el cliente")</h3>
+                        <div class="summaryBox">
+                            <b>@productName</b>
+                            <strong>$@project.PriceUsd.ToString("N0")</strong>
+                            <span>@Lang.T("Standard installed scope", "Alcance estándar instalado")</span>
+                        </div>
+                        <div class="formGrid">
+                            <label>@Lang.T("Installation ZIP", "ZIP de instalación")
+                                <input value="@project.Zip" readonly />
+                            </label>
+                            <label>@Lang.T("Property type", "Tipo de propiedad")
+                                <select name="PropertyType">
+                                    <option value="single" selected="@(project.PropertyType == "single" ? "selected" : null)">@Lang.T("Single-family home", "Casa unifamiliar")</option>
+                                    <option value="condo" selected="@(project.PropertyType == "condo" ? "selected" : null)">Condo / Townhome</option>
+                                    <option value="investment" selected="@(project.PropertyType == "investment" ? "selected" : null)">@Lang.T("Investment property", "Propiedad de inversión")</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="context">
+                            <b>@Lang.T("Why we ask", "Por qué lo preguntamos")</b>
+                            <p>@Lang.T("The address and property type determine service area, permit needs, access, and the correct inspection path.", "La dirección y el tipo de propiedad determinan área de servicio, permisos, acceso y la inspección correcta.")</p>
+                        </div>
+                    </div>
+                }
+                else if (step == 1)
+                {
+                    <div class="screenBody">
+                        <span class="eyebrow">02 · @Lang.T("INSPECTION PATH", "RUTA DE INSPECCIÓN")</span>
+                        <h3>@Lang.T("Choose how Safe verifies the installation", "Elige cómo Safe verifica la instalación")</h3>
+                        <div class="optionGrid">
+                            <button type="button" class="@(project.InspectPath == "remote" ? "selected" : "")" data-set-inspect="remote">
+                                <b>📷 @Lang.T("Photo review", "Revisión con fotos")</b>
+                                <span>@Lang.T("Upload equipment, connections, venting, panel, and access. Safe reviews before confirming.", "Sube equipo, conexiones, ventilación, panel y acceso. Safe revisa antes de confirmar.")</span>
+                                <em>@Lang.T("Fastest for like-for-like replacement", "Más rápido para reemplazo equivalente")</em>
+                            </button>
+                            <button type="button" class="@(project.InspectPath == "visit" ? "selected" : "")" data-set-inspect="visit">
+                                <b>🛠 @Lang.T("On-site inspection", "Inspección en sitio")</b>
+                                <span>@Lang.T("A technician verifies sizing, code conditions, access, and non-standard work.", "Un técnico verifica tamaño, código, acceso y trabajo no estándar.")</span>
+                                <em>@Lang.T("Recommended for conversions or uncertainty", "Recomendado para conversiones o dudas")</em>
+                            </button>
+                        </div>
+                        <div class="context">
+                            <b>@Lang.T("No surprise-work rule", "Regla contra trabajos sorpresa")</b>
+                            <p>@Lang.T("If conditions change the published price, Safe presents a written change for approval before payment or work.", "Si las condiciones cambian el precio publicado, Safe presenta el cambio por escrito antes del pago o trabajo.")</p>
+                        </div>
+                    </div>
+                }
+                else if (step == 2)
+                {
+                    <div class="screenBody">
+                        <span class="eyebrow">03 · @Lang.T("SCOPE APPROVAL", "APROBACIÓN DEL ALCANCE")</span>
+                        <h3>@Lang.T("Everything included, excluded, and protected", "Todo lo incluido, excluido y protegido")</h3>
+                        <div class="scopeReview">
+                            <div>
+                                <b>✓ @Lang.T("Included", "Incluido")</b>
+                                <span>@Lang.T("Equipment · standard labor · removal · startup · expansion tank when applicable", "Equipo · labor estándar · retiro · arranque · tanque de expansión cuando aplique")</span>
+                            </div>
+                            <div>
+                                <b>△ @Lang.T("Verified if needed", "Se verifica si aplica")</b>
+                                <span>@Lang.T("Permits · code upgrades · electrical · gas · venting · access · hidden conditions", "Permisos · código · electricidad · gas · ventilación · acceso · condiciones ocultas")</span>
+                            </div>
+                            <div>
+                                <b>🛡 @Lang.T("Protection", "Protección")</b>
+                                <span>@Lang.T("2-year Safe labor warranty · 5-year manufacturer warranty · digital project record", "2 años de garantía de labor Safe · 5 años del fabricante · expediente digital")</span>
+                            </div>
+                        </div>
+                        <label class="consent">
+                            <input type="checkbox" name="ScopeAccepted" value="true" required @(project.ScopeAccepted ? "checked" : null) />
+                            <span>@Lang.T("I reviewed the standard scope and understand that non-standard work requires separate written approval.", "Revisé el alcance estándar y entiendo que el trabajo no estándar requiere aprobación escrita separada.")</span>
+                        </label>
+                        @if (Model.Error == "scope")
+                        {
+                            <div class="context"><p>@Lang.T("Accept the written scope to continue.", "Acepta el alcance escrito para continuar.")</p></div>
+                        }
+                    </div>
+                }
+                else if (step == 3)
+                {
+                    <div class="screenBody">
+                        <span class="eyebrow">04 · @Lang.T("CHOOSE HOW TO PAY", "ELIGE CÓMO PAGAR")</span>
+                        <h3>@Lang.T("Choose the option that feels right for you", "Elige la opción que mejor se adapte a ti")</h3>
+                        <div class="payRouter">
+                            <button type="button" class="@(project.PaymentPath == PaymentPath.CashSandbox ? "selected" : "")" data-set-pay="CashSandbox">
+                                <small>@Lang.T("PAY IN FULL", "PAGO COMPLETO")</small>
+                                <b>@Lang.T("Secure direct payment", "Pago directo seguro")</b>
+                                <strong>$@project.PriceUsd.ToString("N0")</strong>
+                                <span>@Lang.T("No financing. The hosted checkout opens only after the written scope is approved.", "Sin financiamiento. El checkout alojado abre solo después de aprobar el alcance escrito.")</span>
+                            </button>
+                            <button type="button" class="@(project.PaymentPath == PaymentPath.SynchronySandbox ? "selected" : "")" data-set-pay="SynchronySandbox">
+                                <small>@Lang.T("THIRD-PARTY CREDIT", "CRÉDITO EXTERNO")</small>
+                                <b>Synchrony</b>
+                                <strong>@Lang.T("Possible $0 down*", "Posible $0 inicial*")</strong>
+                                <span>@Lang.T("Synchrony determines approval, promotion, APR, term, and payment on its secure site.", "Synchrony determina aprobación, promoción, APR, plazo y pago en su sitio seguro.")</span>
+                            </button>
+                            <button type="button" class="@(project.PaymentPath == PaymentPath.Safe24Sandbox ? "selected" : "")" data-set-pay="Safe24Sandbox">
+                                <small>@Lang.T("COMPANY ELIGIBILITY", "ELEGIBILIDAD DE LA COMPAÑÍA")</small>
+                                <b>Safe 24</b>
+                                <strong>$100 @Lang.T("initial", "inicial") + $@monthly/mo*</strong>
+                                <span>@Lang.T("Company review with final schedule and disclosures before signing; not instant approval.", "Revisión de la compañía con calendario final y divulgaciones antes de firmar; no es aprobación instantánea.")</span>
+                            </button>
+                        </div>
+                        <div class="safeExplainer" data-pay-panel="Safe24Sandbox" @(project.PaymentPath == PaymentPath.Safe24Sandbox ? null : "hidden")>
+                            <b>@Lang.T("How Safe 24 would work", "Cómo funcionaría Safe 24")</b>
+                            <ol>
+                                <li>@Lang.T("Confirm identity and installation address", "Confirmar identidad y dirección de instalación")</li>
+                                <li>@Lang.T("Review project eligibility and verified scope", "Revisar elegibilidad y alcance verificado")</li>
+                                <li>@Lang.T("Show final payment schedule and required disclosures", "Mostrar calendario final y divulgaciones requeridas")</li>
+                                <li>@Lang.T("Customer signs only after reviewing the total", "El cliente firma solo después de revisar el total")</li>
+                            </ol>
+                            <p>* @Lang.T("The monthly figure is an illustration: (price − $100) ÷ 24, before any legally permitted charge. Final terms require compliance and legal review.", "La mensualidad es un ejemplo: (precio − $100) ÷ 24, antes de cualquier cargo permitido. Los términos finales requieren revisión legal y de cumplimiento.")</p>
+                        </div>
+                        <div class="syncHandoff" data-pay-panel="SynchronySandbox" @(project.PaymentPath == PaymentPath.SynchronySandbox ? null : "hidden")>
+                            <b>@Lang.T("Sandbox only", "Solo sandbox")</b>
+                            <span>@Lang.T("This demo does not open the live Synchrony merchant page and does not collect SSN or card data.", "Esta demo no abre la página real de Synchrony y no captura SSN ni tarjeta.")</span>
+                        </div>
+                        <div class="context" data-pay-panel="CashSandbox" @(project.PaymentPath == PaymentPath.CashSandbox ? null : "hidden")>
+                            <b>@Lang.T("Next: review, secure payment, then choose a date", "Sigue: revisión, pago seguro y después elegir fecha")</b>
+                            <p>@Lang.T("No charge is made on this prototype. Production will verify the approved total on the server before opening hosted checkout.", "Este prototipo no realiza cargos. Producción verificará el total aprobado en el servidor antes de abrir el checkout alojado.")</p>
+                        </div>
+                    </div>
+                }
+                else if (step == 4)
+                {
+                    <div class="screenBody">
+                        <span class="eyebrow">05 · @Lang.T("FINAL REVIEW", "REVISIÓN FINAL")</span>
+                        <h3>@Lang.T("Nothing is submitted until the customer checks it", "Nada se envía hasta que el cliente lo revise")</h3>
+                        <div class="receipt">
+                            <div><span>@Lang.T("Project", "Proyecto")</span><b>@productName</b></div>
+                            <div><span>@Lang.T("Inspection", "Inspección")</span><b>@(project.InspectPath == "remote" ? Lang.T("Photo review", "Revisión con fotos") : Lang.T("On-site visit", "Visita en sitio"))</b></div>
+                            <div><span>@Lang.T("Payment path", "Forma de pago")</span><b>@DemoCopy.PaymentNameCustomer(project.PaymentPath, Lang.IsSpanish)</b></div>
+                            <div><span>@Lang.T("Warranty record", "Registro de garantía")</span><b>@Lang.T("Created after installation", "Se crea después de instalar")</b></div>
+                        </div>
+                        <div class="context">
+                            <b>@Lang.T("What happens next", "Qué pasa después")</b>
+                            <p>
+                                @if (project.PaymentPath == PaymentPath.SynchronySandbox)
+                                {
+                                    @Lang.T("In production the customer is sent to Synchrony. Safe receives no card or Social Security data. This demo stays in sandbox.", "En producción el cliente pasa a Synchrony. Safe no recibe tarjeta ni Seguro Social. Esta demo sigue en sandbox.")
+                                }
+                                else if (project.PaymentPath == PaymentPath.Safe24Sandbox)
+                                {
+                                    @Lang.T("Safe would schedule an eligibility review and present final disclosures before any signature. Safe 24 is not activated here.", "Safe agendaría la revisión de elegibilidad y presentaría términos finales antes de firmar. Safe 24 no está activado aquí.")
+                                }
+                                else
+                                {
+                                    @Lang.T("Safe confirms scope and then would open a certified hosted checkout. No live charge is made in this demo.", "Safe confirma el alcance y después abriría un checkout certificado. Esta demo no realiza un cobro real.")
+                                }
+                            </p>
+                            <p>@Lang.T("Confirming this review posts the sandbox project to the internal board. Then you choose an installation day.", "Al confirmar esta revisión, el proyecto sandbox queda en el tablero interno. Después eliges el día de instalación.")</p>
+                        </div>
+                    </div>
+                }
+                else if (step == 5)
+                {
+                    <div class="screenBody">
+                        <span class="eyebrow">06 · @Lang.T("INSTALLATION SCHEDULE", "AGENDA DE INSTALACIÓN")</span>
+                        <h3>@Lang.T("Choose the first available day", "Elige el primer día disponible")</h3>
+                        <div class="context">
+                            <b>✓ @Lang.T("Payment or financing step completed", "Paso de pago o financiamiento completado")</b>
+                            <p>@Lang.T("This project is now on the internal board. This prototype shows live-capacity behavior. Production availability must come from the dispatch calendar.", "Este proyecto ya está en el tablero interno. Este prototipo muestra el comportamiento de cupos. La disponibilidad real vendrá del calendario de operaciones.")</p>
+                            <p><a href="/ops">@Lang.T("Open internal board", "Abrir tablero interno") →</a></p>
+                        </div>
+                        <div class="dateGrid">
+                            @foreach (var day in Model.Days)
+                            {
+                                if (day.IsFull)
+                                {
+                                    <button type="button" disabled>
+                                        <b>@day.Date.ToString("ddd, MMM d")</b>
+                                        <span>@Lang.T("Full · next day offered", "Lleno · se ofrece el siguiente día")</span>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <label class="date-option">
+                                        <input type="radio" name="Date" value="@day.Date.ToString("yyyy-MM-dd")" required />
+                                        <b>@day.Date.ToString("ddd, MMM d")</b>
+                                        <span>@day.Remaining @Lang.T("of 6 slots left", "de 6 cupos disponibles")</span>
+                                    </label>
+                                }
+                            }
+                        </div>
+                        @if (Model.Error == "full")
+                        {
+                            <div class="context"><p>@Lang.T("That day is full. Pick another date.", "Ese día está lleno. Elige otra fecha.")</p></div>
+                        }
+                        else if (Model.Error == "date")
+                        {
+                            <div class="context"><p>@Lang.T("Choose an available day to continue.", "Elige un día disponible para continuar.")</p></div>
+                        }
+                        else if (Model.Error == "payment_required")
+                        {
+                            <div class="context"><p>@Lang.T("Complete the sandbox payment review first.", "Completa primero la revisión de pago sandbox.")</p></div>
+                        }
+                        <div class="context">
+                            <b>@Lang.T("What happens after booking", "Qué pasa después de agendar")</b>
+                            <p>@Lang.T("A technician contacts the customer within one hour during operating hours to confirm the arrival window and installation details. If tomorrow's six installation slots are full, the next available day appears automatically.", "Un técnico se comunica con el cliente dentro de una hora, en horario de operación, para confirmar la ventana de llegada y los detalles. Si los seis cupos de mañana están llenos, aparece automáticamente el siguiente día disponible.")</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="screenBody success">
+                        <span>✓</span>
+                        <p class="confirmedLabel">@Lang.T("ORDER CONFIRMED", "ORDEN CONFIRMADA") · @project.Id</p>
+                        <h3>@Lang.T("Thank you—your installation is scheduled", "Gracias—tu instalación está agendada")</h3>
+                        <div class="confirmationSummary">
+                            <div><small>@Lang.T("INSTALLATION DAY", "DÍA DE INSTALACIÓN")</small><b>@(project.InstallDate?.ToString("ddd, MMM d") ?? "—")</b></div>
+                            <div><small>@Lang.T("PROJECT", "PROYECTO")</small><b>@productName</b></div>
+                            <div><small>@Lang.T("PAYMENT", "PAGO")</small><b>@DemoCopy.PaymentNameCustomer(project.PaymentPath, Lang.IsSpanish, true)</b></div>
+                        </div>
+                        <p>@Lang.T("A confirmation receipt is on its way by email and text. You do not need to stay on this page.", "Tu recibo de confirmación va en camino por email y texto. No necesitas quedarte en esta página.")</p>
+                        <div class="whatNext">
+                            <b>@Lang.T("What happens next", "Qué sigue")</b>
+                            <ol>
+                                <li>@Lang.T("A technician calls or texts within one business hour to confirm the arrival window.", "Un técnico llama o escribe dentro de una hora laboral para confirmar la ventana de llegada.")</li>
+                                <li>@Lang.T("We send a short preparation checklist and any photo instructions.", "Enviamos una lista corta de preparación y las instrucciones para fotos.")</li>
+                                <li>@Lang.T("After installation, you receive the completed project and warranty record.", "Después de instalar, recibes el expediente terminado y el registro de garantía.")</li>
+                            </ol>
+                        </div>
+                        <div class="confirmationActions">
+                            <a href="/ops">@Lang.T("Open internal board", "Abrir tablero interno")</a>
+                            <a href="tel:@CatalogStore.PhoneTel">@Lang.T("Questions? Call or text", "¿Preguntas? Llama o escribe")</a>
+                            <a href="/#builder">@Lang.T("Start another project", "Iniciar otro proyecto")</a>
+                        </div>
+                    </div>
+                }
+
+                @if (step < 6)
+                {
+                    <div class="screenNav">
+                        @if (step == 0)
+                        {
+                            <a href="/#builder">@Lang.T("Back", "Atrás")</a>
+                        }
+                        else
+                        {
+                            <a href="/project/@project.Id/@(step - 1)">@Lang.T("Back", "Atrás")</a>
+                        }
+                        <button class="continue" type="submit">
+                            @if (step == 3)
+                            {
+                                @Lang.T("Continue to secure payment", "Continuar al pago seguro")
+                            }
+                            else if (step == 4)
+                            {
+                                @Lang.T("Pay / approve and choose date", "Pagar / aprobar y elegir fecha")
+                            }
+                            else if (step == 5)
+                            {
+                                @Lang.T("Reserve this day", "Reservar este día")
+                            }
+                            else
+                            {
+                                @Lang.T("Continue", "Continuar")
+                            }
+                            <b>→</b>
+                        </button>
+                    </div>
+                }
+            </form>
+        </div>
+        <div class="trustRail">
+            <span>🔒 @Lang.T("Hosted payment only", "Pago alojado únicamente")</span>
+            <span>✓ @Lang.T("Written scope approval", "Alcance aprobado por escrito")</span>
+            <span>✓ @Lang.T("No card data stored by Safe", "Safe no guarda tarjetas")</span>
+            <span>✓ @Lang.T("Bilingual record", "Expediente bilingüe")</span>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,18 @@
+@model RealtorRequest
+@{
+    ViewData["Title"] = Model.Id;
+}
+@await Html.PartialAsync("_SandboxBanner")
+<section class="pad">
+    <div class="bookingConfirmed">
+        <small>@Model.Id</small>
+        <h2>@Lang.T("Request received", "Solicitud recibida")</h2>
+        <p>@Lang.T("A coordinator would confirm access, duration, and price within one business hour. This is not a financing approval.", "Un coordinador confirmaría acceso, duración y precio dentro de una hora laboral. Esto no es una aprobación de financiamiento.")</p>
+        <p>@Model.Role · @Model.Stage · @Model.SupportNeed · @Model.FundingReview</p>
+        @if (!string.IsNullOrWhiteSpace(Model.FileName))
+        {
+            <p>@Lang.T("File noted:", "Archivo anotado:") @Model.FileName</p>
+        }
+        <a href="/ops">@Lang.T("View on internal board →", "Ver en tablero interno →")</a>
+    </div>
+</section>

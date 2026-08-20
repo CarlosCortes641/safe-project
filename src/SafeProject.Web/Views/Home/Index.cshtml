@@ -1,0 +1,339 @@
+@model HomeViewModel
+@{
+    var first = Model.WaterHeaters[0];
+}
+<main id="main-content">
+    @await Html.PartialAsync("_SandboxBanner")
+    <section class="hero">
+        <div>
+            <p>HVAC · WATER HEATERS · CHARLOTTE</p>
+            <h1>@Lang.T("Choose your system. See the path to comfort.", "Elige tu sistema. Conoce el camino hacia el confort.")</h1>
+            <div class="lead">@Lang.T("Safe sells, installs, replaces, and services air-conditioning and water-heating systems with clear scope, payment options, and specialized property support.", "Safe vende, instala, reemplaza y da servicio a sistemas de aire acondicionado y water heaters con alcance claro, opciones de pago y apoyo especializado para propiedades.")</div>
+            <div class="choice">
+                <a href="#hvac"><b>❄</b><span>@Lang.T("Air conditioning", "Aire acondicionado")<small>@Lang.T("Start HVAC questions", "Comenzar preguntas HVAC") →</small></span></a>
+                <a href="#builder"><b>♨</b><span>Water heaters<small>@Lang.T("See installed prices", "Ver precios instalados") →</small></span></a>
+            </div>
+            <div class="checks">
+                <span>✓ @Lang.T("Licensed general contractor", "General contractor con licencias")</span>
+                <span>✓ @Lang.T("Up to 30 years of technician experience", "Técnicos con hasta 30 años de experiencia")</span>
+                <span>✓ English / Español</span>
+            </div>
+        </div>
+        <aside>
+            <em>SAFE HVAC SOLUTION LLC</em>
+            <div>@Lang.T("Two essential systems", "Dos sistemas esenciales")</div>
+            <strong>@Lang.T("One team", "Un equipo")</strong>
+            <span>@Lang.T("Quote · finance · schedule", "Cotizar · financiar · agendar")</span>
+        </aside>
+    </section>
+
+    <div class="proof">
+        <span>@Lang.T("Built around clarity", "Hecho para la claridad")</span>
+        <span><b>1</b> @Lang.T("See price", "Ver precio") · <b>2</b> @Lang.T("Confirm scope", "Confirmar alcance") · <b>3</b> @Lang.T("Choose payment", "Elegir pago") · <b>4</b> @Lang.T("Book install", "Agendar instalación")</span>
+    </div>
+
+    <section class="specialties pad" id="solutions">
+        <div class="heading">
+            <p>@Lang.T("WHAT SAFE SPECIALIZES IN", "EN QUÉ SE ESPECIALIZA SAFE")</p>
+            <h2>@Lang.T("HVAC and water heating first.", "HVAC y water heaters primero.")</h2>
+            <div>@Lang.T("Safe is a licensed general contracting company with construction capabilities. Our primary sales focus is the essential mechanical systems homeowners need most.", "Safe es un general contractor con licencia y capacidades de construcción. El foco comercial principal son los sistemas mecánicos esenciales.")</div>
+        </div>
+        <div class="specialtyGrid">
+            <article>
+                <b>❄</b>
+                <h3>@Lang.T("Air conditioning & heating", "Aire acondicionado y calefacción")</h3>
+                <p>@Lang.T("Sales, installation, replacement, maintenance, system evaluation, warranty verification, and transparent project scope.", "Venta, instalación, reemplazo, mantenimiento, evaluación, verificación de garantía y alcance transparente.")</p>
+                <a href="#hvac">@Lang.T("Start HVAC quote", "Empezar cotización HVAC") →</a>
+            </article>
+            <article>
+                <b>♨</b>
+                <h3>Water heaters</h3>
+                <p>@Lang.T("Tank and tankless sales, installation, replacement, maintenance, installed pricing, and flexible payment paths.", "Venta e instalación de tanque y tankless, precios instalados y rutas de pago claras.")</p>
+                <a href="#builder">@Lang.T("Build my price", "Armar mi precio") →</a>
+            </article>
+            <article>
+                <b>✓</b>
+                <h3>@Lang.T("Licensed project support", "Apoyo de proyectos con licencia")</h3>
+                <p>@Lang.T("Mechanical and structural risk evaluation, warranty records, repair planning, and closing support for Realtors and investors.", "Evaluación de riesgo, registros de garantía, plan de reparación y apoyo de cierre para Realtors e inversionistas.")</p>
+                <a href="#property">@Lang.T("See specialist support", "Ver apoyo especializado") →</a>
+            </article>
+        </div>
+    </section>
+
+    <section class="finder pad" id="compare">
+        <div class="heading">
+            <p>@Lang.T("QUICK PRODUCT MATCH", "COINCIDENCIA RÁPIDA DE PRODUCTO")</p>
+            <h2>@Lang.T("Tell us what you have. Start with the right path.", "Dinos qué tienes. Empieza por el camino correcto.")</h2>
+        </div>
+        <div class="finderGrid">
+            <article>
+                <span>⚡</span>
+                <h3>@Lang.T("Electric tank", "Tanque eléctrico")</h3>
+                <p>@Lang.T("Your current tank is electric and you want a straightforward 40-, 50-, or 60-gallon replacement.", "Tu tanque actual es eléctrico y quieres un reemplazo directo de 40, 50 o 60 galones.")</p>
+                <a href="#builder">@Lang.T("See electric installed prices", "Ver precios eléctricos") →</a>
+            </article>
+            <article>
+                <span>🔥</span>
+                <h3>@Lang.T("Gas tank", "Tanque de gas")</h3>
+                <p>@Lang.T("Your current tank uses natural gas and the replacement is expected to keep the same fuel and location.", "Tu tanque usa gas natural y el reemplazo mantiene el mismo combustible y ubicación.")</p>
+                <a href="#builder">@Lang.T("See gas installed prices", "Ver precios de gas") →</a>
+            </article>
+            <article>
+                <span>∞</span>
+                <h3>Tankless</h3>
+                <p>@Lang.T("You want continuous hot water or a conversion. Gas, electrical, venting, condensate, and access require verification.", "Quieres agua caliente continua o una conversión. Gas, electricidad, ventilación y acceso requieren verificación.")</p>
+                <a href="#builder">@Lang.T("Compare tankless paths", "Comparar tankless") →</a>
+            </article>
+            <article>
+                <span>❄</span>
+                <h3>@Lang.T("Complete HVAC", "HVAC completo")</h3>
+                <p>@Lang.T("You need AC plus heating equipment replacement, repair diagnosis, maintenance, or a mechanical risk assessment.", "Necesitas reemplazo de AC y calefacción, diagnóstico, mantenimiento o evaluación de riesgo.")</p>
+                <a href="#hvac">@Lang.T("Answer 3 HVAC questions", "Responder 3 preguntas HVAC") →</a>
+            </article>
+        </div>
+    </section>
+
+    <section class="pad" id="builder" data-safe-builder>
+        <div class="heading">
+            <p>@Lang.T("SAFE DIRECT · ONLINE PRICE BUILDER", "SAFE DIRECT · CALCULADORA DE PRECIO")</p>
+            <h2>@Lang.T("Build your water-heater plan", "Construye tu plan de water heater")</h2>
+            <div>@Lang.T("Choose a product, see the installed price, compare Synchrony, Safe 24, and cash, then continue through the complete Safe project path.", "Elige un producto, mira el precio instalado, compara Synchrony, Safe 24 y cash, y continúa por la ruta completa del proyecto Safe.")</div>
+        </div>
+        <div class="quote">
+            <div class="select">
+                <label for="zip">@Lang.T("Installation ZIP", "ZIP de instalación")
+                    <input id="zip" name="zip" placeholder="28202" maxlength="5" inputmode="numeric" />
+                </label>
+                <h3>@Lang.T("Choose your system", "Elige tu sistema")</h3>
+                @foreach (var product in Model.WaterHeaters)
+                {
+                    <button type="button"
+                            class="product-btn@(product.Id == first.Id ? " on" : "")"
+                            data-id="@product.Id"
+                            data-price="@product.PriceUsd"
+                            data-name="@Lang.T(product.NameEn, product.NameEs)">
+                        <span>@product.Icon @Lang.T(product.NameEn, product.NameEs)</span>
+                        <b>$@product.PriceUsd.ToString("N0")</b>
+                    </button>
+                }
+            </div>
+            <div class="result">
+                <small>@Lang.T("YOUR SELECTION", "TU SELECCIÓN")</small>
+                <h3 data-selected-name>@Lang.T(first.NameEn, first.NameEs)</h3>
+                <h4 class="payQuestion">@Lang.T("How would you like to pay?", "¿Cómo prefieres pagar?")</h4>
+                <div class="payments three paymentChoices">
+                    <button type="button" class="selected" data-pay="cash">
+                        <small>@Lang.T("PAY IN FULL", "PAGO COMPLETO")</small>
+                        <strong data-cash-price>$@first.PriceUsd.ToString("N0")</strong>
+                        <span>@Lang.T("No financing · secure checkout after scope confirmation", "Sin financiamiento · pago seguro después de confirmar el alcance")</span>
+                    </button>
+                    <button type="button" class="sync" data-pay="sync">
+                        <small>SYNCHRONY</small>
+                        <strong>@Lang.T("Possible $0 down*", "Posible $0 inicial*")</strong>
+                        <span>@Lang.T("Sandbox only · subject to Synchrony approval in production", "Solo sandbox · en producción la aprobación la define Synchrony")</span>
+                    </button>
+                    <button type="button" data-pay="safe24">
+                        <small>SAFE 24</small>
+                        <strong data-safe24-price>$100 @Lang.T("initial", "inicial")</strong>
+                        <span data-safe24-monthly data-monthly-suffix="@Lang.T("illustrated payments*", "pagos ilustrativos*")">$@(((first.PriceUsd - 100) / 24m).ToString("0.00")) @Lang.T("× 24 illustrated payments*", "× 24 pagos ilustrativos*")</span>
+                    </button>
+                </div>
+                <div class="included">
+                    <h4>@Lang.T("Standard installation includes", "La instalación estándar incluye")</h4>
+                    <span>✓ @Lang.T("New water heater", "Water heater nuevo")</span>
+                    <span>✓ @Lang.T("Expansion tank when applicable", "Tanque de expansión cuando aplique")</span>
+                    <span>✓ @Lang.T("Removal of existing tank", "Retiro del tanque existente")</span>
+                    <span>✓ @Lang.T("Standard connections & startup", "Conexiones estándar y arranque")</span>
+                    <span>✓ @Lang.T("2-year Safe labor warranty", "2 años de garantía de mano de obra Safe")</span>
+                    <span>✓ @Lang.T("5-year manufacturer warranty", "5 años de garantía del fabricante")</span>
+                </div>
+                <form class="paymentNext" method="post" asp-controller="Project" asp-action="Start" data-start-form>
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="Kind" value="water" />
+                    <input type="hidden" name="ProductId" value="@first.Id" data-product-id />
+                    <input type="hidden" name="Zip" value="28202" data-zip />
+                    <input type="hidden" name="PaymentPath" value="CashSandbox" data-pay-path />
+                    <button class="primary" type="submit" data-start-cta data-cta-cash="@Lang.T("Continue to inspection, then secure payment", "Continuar a inspección y después al pago seguro")" data-cta-sync="@Lang.T("Continue to inspection", "Continuar a la inspección")" data-cta-safe24="@Lang.T("Continue to Safe 24 eligibility review", "Continuar a revisión de elegibilidad Safe 24")">@Lang.T("Continue to inspection, then secure payment", "Continuar a inspección y después al pago seguro") <b>→</b></button>
+                    <span class="textLink">@Lang.T("Synchrony and Safe 24 stay in sandbox. No live applications or charges.", "Synchrony y Safe 24 siguen en sandbox. Sin solicitudes ni cargos reales.")</span>
+                </form>
+                <p class="legal">* @Lang.T("Synchrony: $0 down may be available for approved applicants; actual promotions, APR, term, and payment are determined by Synchrony. Safe 24: illustrative $100 initial payment plus 24 payments shown before any approved finance charge. Eligibility, total of payments, and final scope are disclosed before signing.", "Synchrony: $0 inicial puede estar disponible para solicitantes aprobados; las promociones, APR, plazo y pago los determina Synchrony. Safe 24: ejemplo de $100 inicial más 24 pagos mostrados antes de cualquier cargo financiero aprobado. La elegibilidad, total de pagos y alcance final se informan antes de firmar.")</p>
+            </div>
+        </div>
+        <div class="notice">
+            <b>∞ TANKLESS</b>
+            <span>@Lang.T("Gas line, electrical panel/circuits, venting, condensate, recirculation, permits, and non-standard access are verified and priced separately when required.", "Línea de gas, panel/circuitos, ventilación, condensado, recirculación, permisos y acceso no estándar se verifican y cotizan por separado.")</span>
+        </div>
+    </section>
+
+    <section class="scope pad" id="scope">
+        <div class="heading">
+            <p>@Lang.T("FAST SCOPE CHECK", "CONFIRMACIÓN RÁPIDA DEL ALCANCE")</p>
+            <h2>@Lang.T("Help us confirm the right install.", "Ayúdanos a confirmar la instalación correcta.")</h2>
+            <div>@Lang.T("These details reduce surprises. They do not place an order or submit a credit application.", "Estos datos reducen sorpresas. No crean una orden ni envían una solicitud de crédito.")</div>
+        </div>
+        <div class="scopegrid">
+            <article>
+                <b>01</b>
+                <h3>@Lang.T("How urgent is it?", "¿Qué tan urgente es?")</h3>
+                <button type="button" class="on">@Lang.T("Leaking / no hot water", "Fuga / sin agua caliente")</button>
+                <button type="button">@Lang.T("Replace soon", "Reemplazar pronto")</button>
+                <button type="button">@Lang.T("Planning ahead", "Planificando")</button>
+            </article>
+            <article>
+                <b>02</b>
+                <h3>@Lang.T("Current setup", "Instalación actual")</h3>
+                <button type="button" class="on">Tank</button>
+                <button type="button">Tankless</button>
+                <button type="button">@Lang.T("Not sure", "No estoy seguro")</button>
+            </article>
+            <article>
+                <b>03</b>
+                <h3>@Lang.T("Photos speed confirmation", "Las fotos aceleran la confirmación")</h3>
+                <label class="upload">+ @Lang.T("Choose equipment photos", "Elegir fotos del equipo")
+                    <input type="file" accept="image/*,.pdf" multiple />
+                </label>
+                <p class="builder-note">@Lang.T("Files stay in this browser only. No upload server yet.", "Los archivos quedan solo en este navegador. Aún no hay servidor de carga.")</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="hvac" id="hvac">
+        <div>
+            <p>SAFE HVAC DIRECT · @Lang.T("QUICK QUOTE", "COTIZACIÓN RÁPIDA")</p>
+            <h2>@Lang.T("Answer three questions. See your starting price.", "Responde tres preguntas. Ve tu precio inicial.")</h2>
+            <div class="hvacQuestions">
+                <label>@Lang.T("What do you need?", "¿Qué necesitas?")
+                    <select id="hvac-need">
+                        <option value="replace">@Lang.T("Replace complete AC + heat", "Reemplazar AC + calefacción")</option>
+                        <option value="repair">@Lang.T("Repair / diagnosis", "Reparación / diagnóstico")</option>
+                        <option value="maintenance">@Lang.T("Maintenance", "Mantenimiento")</option>
+                        <option value="risk">@Lang.T("Property risk assessment", "Evaluación de riesgo")</option>
+                    </select>
+                </label>
+                <label>@Lang.T("System size", "Tamaño del sistema")
+                    <select id="hvac-tons">
+                        <option value="hvac-replace-up-to-2-5" data-price="8000">@Lang.T("Up to 2.5 tons", "Hasta 2.5 toneladas")</option>
+                        <option value="hvac-replace-3-4" data-price="10000">@Lang.T("3–4 tons", "3–4 toneladas")</option>
+                        <option value="quote" data-price="0">@Lang.T("Not sure", "No estoy seguro")</option>
+                    </select>
+                </label>
+                <label>@Lang.T("Approximate system age", "Edad aproximada")
+                    <select>
+                        <option>@Lang.T("Not sure", "No estoy seguro")</option>
+                        <option>0–9</option>
+                        <option>10–14</option>
+                        <option>15+</option>
+                    </select>
+                </label>
+            </div>
+            <p class="scopeNote">@Lang.T("Safe confirms sizing, electrical, refrigerant lines, access, warranty status, and any non-standard transitions before authorization.", "Safe confirma dimensionamiento, electricidad, líneas, acceso y garantía antes de autorizar.")</p>
+        </div>
+        <div class="hvacResult">
+            <small data-hvac-label>@Lang.T("Complete replacement", "Reemplazo completo")</small>
+            <strong data-hvac-price>$8,000</strong>
+            <span>✓ @Lang.T("1-year Safe labor warranty", "1 año de garantía de mano de obra Safe")</span>
+            <span>✓ @Lang.T("5-year manufacturer warranty", "5 años de garantía del fabricante")</span>
+            <span>✓ @Lang.T("Ductwork not included", "Ductwork no incluido")</span>
+            <form method="post" asp-controller="Project" asp-action="Start" data-hvac-form style="margin-top:20px">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="Kind" value="hvac" />
+                <input type="hidden" name="ProductId" value="hvac-replace-up-to-2-5" data-hvac-product />
+                <input type="hidden" name="Zip" value="28202" />
+                <input type="hidden" name="PaymentPath" value="CashSandbox" />
+                <button class="primary" type="submit" data-hvac-submit>@Lang.T("Continue HVAC selection →", "Continuar selección HVAC →")</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="memberships pad" id="plans">
+        <div class="heading">
+            <p>@Lang.T("PAYMENT CHOICE", "ELECCIÓN DE PAGO")</p>
+            <h2>@Lang.T("Apply first. Keep a second path ready.", "Solicita primero. Mantén una segunda ruta lista.")</h2>
+        </div>
+        <div class="cards">
+            <article>
+                <b>01</b>
+                <h3>Synchrony · @Lang.T("possible $0 down", "posible $0 inicial")</h3>
+                <p>@Lang.T("Production will use the official merchant page. This demo never opens live Synchrony and never collects SSN or card data.", "Producción usará la página oficial del comercio. Esta demo no abre Synchrony real y no captura SSN ni tarjeta.")</p>
+                <a class="primary cardCta" href="#builder">@Lang.T("Use Synchrony sandbox path →", "Usar ruta sandbox Synchrony →")</a>
+            </article>
+            <article>
+                <b>02</b>
+                <h3>Safe 24 · $100 @Lang.T("down", "inicial")</h3>
+                <p>@Lang.T("A guided company eligibility review with verified scope, a 24-payment illustration, required disclosures, and signature only after the customer reviews the total.", "Revisión de elegibilidad de la compañía con alcance verificado, ilustración a 24 pagos y firma solo después de revisar el total.")</p>
+                <a class="outline cardCta" href="#builder">@Lang.T("See Safe 24 sandbox illustration →", "Ver ilustración sandbox Safe 24 →")</a>
+            </article>
+            <article>
+                <b>03</b>
+                <h3>@Lang.T("Cash installed price", "Precio de contado instalado")</h3>
+                <p>@Lang.T("Review the published standard scope, confirm site conditions, and continue to a future certified hosted checkout.", "Revisa el alcance estándar publicado, confirma condiciones del sitio y continúa a un checkout alojado futuro.")</p>
+                <a class="dark cardCta" href="#builder">@Lang.T("Preview direct checkout →", "Ver checkout directo →")</a>
+            </article>
+        </div>
+    </section>
+
+    <section class="property pad" id="property">
+        <p>@Lang.T("TRANSACTION & INVESTMENT SPECIALISTS", "ESPECIALISTAS EN TRANSACCIONES E INVERSIÓN")</p>
+        <h2>@Lang.T("Safe Project Solution: technical support from inspection to closing.", "Safe Project Solution: apoyo técnico desde la inspección hasta el cierre.")</h2>
+        <div>@Lang.T("Realtors, sellers, first-time buyers, investors, and bank-related projects get trade review, documented scope, and closing coordination.", "Realtors, vendedores, primeros compradores, inversionistas y proyectos de banco reciben revisión técnica, alcance documentado y coordinación de cierre.")</div>
+        <div class="realtorGrid">
+            <article><b>01</b><h3>@Lang.T("Mechanical risk assessment", "Evaluación de riesgo mecánico")</h3><p>@Lang.T("HVAC and water-heater condition, age, service needs, and replacement exposure.", "Condición, edad, servicio y exposición a reemplazo.")</p></article>
+            <article><b>02</b><h3>@Lang.T("Warranty verification", "Verificación de garantía")</h3><p>@Lang.T("Manufacturer registration, coverage status, expiration, serial numbers, and available options.", "Registro, cobertura, vencimiento, seriales y opciones.")</p></article>
+            <article><b>03</b><h3>@Lang.T("Structural & moisture awareness", "Riesgo estructural y humedad")</h3><p>@Lang.T("Crawlspace, framing, floors, insulation, moisture, and approximate repair scope.", "Crawlspace, estructura, pisos, aislamiento, humedad y alcance aproximado.")</p></article>
+            <article><b>04</b><h3>@Lang.T("Planning & execution", "Planificación y ejecución")</h3><p>@Lang.T("Budgeting, responsive repairs, documentation, construction scope, and closing preparation.", "Presupuesto, reparaciones, documentación, alcance y preparación de cierre.")</p></article>
+        </div>
+        <div class="realtorBooking">
+            <small>PROPERTY DEAL DESK</small>
+            <h3>@Lang.T("Send a Realtor / closing request", "Enviar solicitud Realtor / cierre")</h3>
+            <p>@Lang.T("Capture transaction stage, technical need, funding review, and a test file name. Payment at closing stays an evaluation only.", "Captura etapa, necesidad técnica, revisión de pago y un archivo de prueba. El pago al cierre sigue siendo solo una evaluación.")</p>
+            <div class="dateGrid">
+                @foreach (var day in Model.ScheduleDays)
+                {
+                    var label = day.Date.ToString("ddd, MMM d");
+                    if (day.IsFull)
+                    {
+                        <button type="button" disabled>@label <span>@Lang.T("Full", "Lleno")</span></button>
+                    }
+                    else
+                    {
+                        <button type="button" disabled>@label <span>@Lang.T("Open", "Abierto")</span></button>
+                    }
+                }
+            </div>
+            <p class="builder-note">@Lang.T($"Test capacity: {Model.CapacityPerDay} install units/day. Full days stay blocked.", $"Capacidad de prueba: {Model.CapacityPerDay} unidades/día. Los días llenos quedan bloqueados.")</p>
+            <a class="primary bookRequest" href="/realtor">@Lang.T("Open Realtor request →", "Abrir solicitud Realtor →")</a>
+        </div>
+    </section>
+
+    <section class="facts pad" id="facts">
+        <div class="heading">
+            <p>@Lang.T("VERIFIED SERVICE FACTS", "HECHOS VERIFICADOS DEL SERVICIO")</p>
+            <h2>@Lang.T("Clear facts for customers, search engines, and AI agents.", "Hechos claros para clientes, buscadores y agentes de IA.")</h2>
+        </div>
+        <div class="factsGrid">
+            <article><b>@Lang.T("Identity", "Identidad")</b><p>Safe Project Solution by Safe HVAC Solution LLC. Powered by Home Indor Technology Inc.</p></article>
+            <article><b>@Lang.T("Area", "Área")</b><p>@Lang.T("Charlotte, North Carolina and communities approximately one hour away.", "Charlotte, North Carolina y comunidades a aproximadamente una hora.")</p></article>
+            <article><b>Water heater</b><p>@Lang.T("New equipment, expansion tank when applicable, removal, standard connections, 2-year Safe labor, 5-year manufacturer warranty.", "Equipo nuevo, tanque de expansión cuando aplique, retiro, conexiones estándar, 2 años Safe y 5 años de fabricante.")</p></article>
+            <article><b>HVAC</b><p>@Lang.T("Cooling and heating replacement with standard labor. Ductwork is not included. 1-year Safe labor, 5-year manufacturer warranty.", "Reemplazo de enfriamiento y calefacción. Ductwork no incluido. 1 año Safe y 5 años de fabricante.")</p></article>
+        </div>
+    </section>
+
+    <section class="faq pad" id="faq">
+        <div class="heading">
+            <p>@Lang.T("STRAIGHT ANSWERS", "RESPUESTAS DIRECTAS")</p>
+            <h2>@Lang.T("Before you choose.", "Antes de elegir.")</h2>
+        </div>
+        <details open><summary>@Lang.T("Is the displayed price final?", "¿El precio mostrado es final?")</summary><p>@Lang.T("It covers the published standard scope. Safe confirms site conditions and discloses non-standard work before authorization.", "Cubre el alcance estándar publicado. Safe confirma condiciones del sitio y divulga trabajo no estándar antes de autorizar.")</p></details>
+        <details><summary>@Lang.T("Is $0 down with Synchrony guaranteed?", "¿$0 inicial con Synchrony está garantizado?")</summary><p>@Lang.T("No. It may be available for approved applicants. Synchrony determines the promotion, APR, term, and payment.", "No. Puede estar disponible para solicitantes aprobados. Synchrony determina promoción, APR, plazo y pago.")</p></details>
+        <details><summary>@Lang.T("Is Safe 24 the same as Synchrony?", "¿Safe 24 es lo mismo que Synchrony?")</summary><p>@Lang.T("No. Safe 24 is the company eligibility path with a $100 initial payment; Synchrony is a separate third-party credit application.", "No. Safe 24 es la ruta de elegibilidad de la compañía con $100 inicial; Synchrony es una solicitud de crédito de terceros.")</p></details>
+        <details><summary>@Lang.T("Does this reserve an appointment?", "¿Esto reserva una cita?")</summary><p>@Lang.T("No. Safe first confirms scope, price, and availability.", "No. Safe primero confirma alcance, precio y disponibilidad.")</p></details>
+    </section>
+
+    <section class="closing">
+        <h2>@Lang.T("Comfort now. A payment path that fits.", "Confort ahora. Una ruta de pago que encaja.")</h2>
+        <div class="buttons centered">
+            <a class="primary" href="#hvac">@Lang.T("Price HVAC", "Cotizar HVAC") →</a>
+            <a class="dark" href="#builder">@Lang.T("Price a water heater", "Cotizar water heater") →</a>
+        </div>
+    </section>
+</main>

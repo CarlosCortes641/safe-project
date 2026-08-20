@@ -1,0 +1,42 @@
+@model ProjectRecord
+@{
+    ViewData["Title"] = Model.Id;
+}
+@await Html.PartialAsync("_SandboxBanner")
+<section class="pad journey">
+    <div class="journeyShell">
+        <ul class="stepper">
+            <li class="done"><b>1</b><span>@Lang.T("Project", "Proyecto")</span></li>
+            <li class="active"><b>2</b><span>@Lang.T("Review", "Revisión")</span></li>
+            <li><b>3</b><span>@Lang.T("Payment", "Pago")</span></li>
+            <li><b>4</b><span>@Lang.T("Schedule", "Agenda")</span></li>
+            <li><b>5</b><span>@Lang.T("Done", "Listo")</span></li>
+        </ul>
+        <div class="screen">
+            <div class="screenTop">
+                <span>@Model.Id</span>
+                <small>@DemoCopy.StatusName(Model.Status, Lang.IsSpanish)</small>
+            </div>
+            <div class="screenBody">
+                <p class="eyebrow">@Lang.T("SELECTION KEPT", "SELECCIÓN CONSERVADA")</p>
+                <h3>@Lang.T("Confirm what the customer selected", "Confirma lo que seleccionó el cliente")</h3>
+                <div class="summaryBox">
+                    <div>
+                        <small>@Lang.T("Product", "Producto")</small>
+                        <strong>@Lang.T(Model.ProductNameEn, Model.ProductNameEs)</strong>
+                    </div>
+                    <strong>$@Model.PriceUsd.ToString("N0")</strong>
+                    <span>ZIP @Model.Zip · @DemoCopy.PaymentName(Model.PaymentPath, Lang.IsSpanish)</span>
+                </div>
+                <div class="context">
+                    <b>@Lang.T("Sandbox rule", "Regla sandbox")</b>
+                    <p>@Lang.T("This amount is not charged. Synchrony and Safe 24 stay simulated until legal and compliance approval.", "Este monto no se cobra. Synchrony y Safe 24 siguen simulados hasta la aprobación legal y de cumplimiento.")</p>
+                </div>
+            </div>
+            <div class="screenNav">
+                <a href="/">@Lang.T("Back", "Atrás")</a>
+                <a class="continue" href="/project/@Model.Id/pay">@Lang.T("Continue →", "Continuar →")</a>
+            </div>
+        </div>
+    </div>
+</section>

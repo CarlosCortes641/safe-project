@@ -1,0 +1,26 @@
+@model ProjectRecord
+@{
+    ViewData["Title"] = Lang.T("Order confirmed", "Orden confirmada");
+}
+@await Html.PartialAsync("_SandboxBanner")
+<section class="pad journey">
+    <div class="journeyShell">
+        <div class="screen">
+            <div class="screenBody success">
+                <span>✓</span>
+                <p class="confirmedLabel">@Lang.T("SANDBOX ORDER", "ORDEN SANDBOX")</p>
+                <h3>@Lang.T("Thank you—your installation is scheduled", "Gracias—tu instalación está agendada")</h3>
+                <div class="confirmationSummary">
+                    <div><small>@Lang.T("Order", "Orden")</small><b>@Model.Id</b></div>
+                    <div><small>@Lang.T("Product", "Producto")</small><b>@Lang.T(Model.ProductNameEn, Model.ProductNameEs)</b></div>
+                    <div><small>@Lang.T("Install", "Instalación")</small><b>@(Model.InstallDate?.ToString("ddd, MMM d") ?? "—")</b></div>
+                </div>
+                <p>@DemoCopy.PaymentName(Model.PaymentPath, Lang.IsSpanish) · $@Model.PriceUsd.ToString("N0") · @Lang.T("not a live charge", "no es un cobro real")</p>
+                <div class="confirmationActions">
+                    <a href="/ops">@Lang.T("Open internal board", "Abrir tablero interno")</a>
+                    <a href="/">@Lang.T("Back to website", "Atrás al website")</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
