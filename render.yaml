@@ -10,3 +10,9 @@ services:
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
+      - key: DOTNET_GCServer
+        value: "0"
+      - key: DOTNET_EnableDiagnostics
+        value: "0"
+      - key: DOTNET_GCHeapHardLimit
+        value: "268435456"
