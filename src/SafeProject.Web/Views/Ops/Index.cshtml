@@ -1,0 +1,123 @@
+@model OpsDashboardViewModel
+@{
+    ViewData["Title"] = Lang.T("Internal board", "Tablero interno");
+}
+@await Html.PartialAsync("_SandboxBanner")
+<section class="ops pad">
+    <div class="heading">
+        <p>OPS</p>
+        <h2>@Lang.T("Internal board", "Tablero interno")</h2>
+        <div>@Lang.T("Sandbox projects, Realtor requests, and install capacity. No live payments.", "Proyectos sandbox, solicitudes Realtor y capacidad de instalación. Sin pagos reales.")</div>
+    </div>
+
+    <div class="factsGrid ops-stats">
+        <article><b>@Model.Projects.Count</b><p>@Lang.T("Projects", "Proyectos")</p></article>
+        <article><b>@Model.RealtorRequests.Count</b><p>@Lang.T("Realtor requests", "Solicitudes Realtor")</p></article>
+        <article><b>@Model.CapacityPerDay</b><p>@Lang.T("Daily install units", "Unidades diarias")</p></article>
+        <article><b>@Model.Days.Count(d => d.IsFull)</b><p>@Lang.T("Full days", "Días llenos")</p></article>
+    </div>
+
+    <h3>@Lang.T("Capacity", "Capacidad")</h3>
+    <div class="dateGrid">
+        @foreach (var day in Model.Days)
+        {
+            <div class="ops-day@(day.IsFull ? " full" : "")">
+                <b>@day.Date.ToString("ddd, MMM d")</b>
+                <span>@day.Used / @day.Capacity @(day.IsFull ? Lang.T("Full", "Lleno") : Lang.T("Open", "Abierto"))</span>
+            </div>
+        }
+    </div>
+
+    <h3>@Lang.T("Projects", "Proyectos")</h3>
+    <table class="ops-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>@Lang.T("Type", "Tipo")</th>
+                <th>@Lang.T("Product", "Producto")</th>
+                <th>ZIP</th>
+                <th>@Lang.T("Payment", "Pago")</th>
+                <th>@Lang.T("Status", "Estado")</th>
+                <th>@Lang.T("Date", "Fecha")</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (Model.Projects.Count == 0)
+        {
+            <tr>
+                <td colspan="7">@Lang.T("No sandbox projects yet. Complete a water-heater or HVAC path through payment review to post one here.", "Aún no hay proyectos sandbox. Completa una ruta de water heater o HVAC hasta la revisión de pago para publicarlo aquí.")</td>
+            </tr>
+        }
+        @foreach (var project in Model.Projects)
+        {
+            var ready = project.Status is ProjectStatus.PaymentAuthorizedSandbox or ProjectStatus.Scheduled;
+            <tr class="@(ready ? "ops-ready" : "")">
+                <td><a href="/project/@project.Id">@project.Id</a></td>
+                <td>@DemoCopy.KindName(project.Kind, Lang.IsSpanish)</td>
+                <td>@Lang.T(project.ProductNameEn, project.ProductNameEs) · $@project.PriceUsd.ToString("N0")</td>
+                <td>@project.Zip</td>
+                <td>@DemoCopy.PaymentName(project.PaymentPath, Lang.IsSpanish)</td>
+                <td>@DemoCopy.StatusName(project.Status, Lang.IsSpanish)</td>
+                <td>@(project.InstallDate?.ToString("MMM d") ?? "—")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <h3>@Lang.T("Realtor requests", "Solicitudes Realtor")</h3>
+    <table class="ops-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>@Lang.T("Role", "Rol")</th>
+                <th>@Lang.T("Stage", "Etapa")</th>
+                <th>@Lang.T("Need", "Necesidad")</th>
+                <th>@Lang.T("Payment review", "Revisión de pago")</th>
+                <th>@Lang.T("File", "Archivo")</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var request in Model.RealtorRequests)
+        {
+            <tr>
+                <td>@request.Id</td>
+                <td>@request.Role</td>
+                <td>@request.Stage</td>
+                <td>@request.SupportNeed</td>
+                <td>@request.FundingReview</td>
+                <td>@(string.IsNullOrWhiteSpace(request.FileName) ? "—" : request.FileName)</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <h3>@Lang.T("Audit (demo only)", "Auditoría (solo demo)")</h3>
+    <p class="ops-note">@Lang.T("Shown in this sandbox so you can see each project and Realtor step. It is not part of the production board.", "Se muestra en este sandbox para ver cada paso del proyecto y de Realtor. No forma parte del tablero de producción.")</p>
+    <table class="ops-table">
+        <thead>
+            <tr>
+                <th>UTC</th>
+                <th>@Lang.T("Entity", "Entidad")</th>
+                <th>@Lang.T("Action", "Acción")</th>
+                <th>@Lang.T("Detail", "Detalle")</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (Model.Audit.Count == 0)
+        {
+            <tr>
+                <td colspan="4">@Lang.T("No demo events yet.", "Aún no hay eventos de demo.")</td>
+            </tr>
+        }
+        @foreach (var item in Model.Audit)
+        {
+            <tr>
+                <td>@item.AtUtc.ToString("HH:mm:ss")</td>
+                <td>@item.EntityType @item.EntityId</td>
+                <td>@item.Action</td>
+                <td>@item.Detail</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</section>

@@ -1,0 +1,12 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+<section class="pad">
+    <h1>Error</h1>
+    <p>@Lang.T("An error occurred while processing your request.", "Ocurrió un error al procesar la solicitud.")</p>
+    @if (Model?.ShowRequestId == true)
+    {
+        <p><code>@Model.RequestId</code></p>
+    }
+</section>

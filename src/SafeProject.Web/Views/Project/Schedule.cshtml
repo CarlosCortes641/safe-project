@@ -1,0 +1,54 @@
+@model ProjectRecord
+@{
+    ViewData["Title"] = Lang.T("Schedule", "Agenda");
+    var days = ViewBag.Days as IReadOnlyList<DayCapacity> ?? [];
+    var error = ViewBag.Error as string;
+}
+@await Html.PartialAsync("_SandboxBanner")
+<section class="pad journey">
+    <div class="journeyShell">
+        <div class="screen">
+            <div class="screenTop">
+                <span>@Model.Id</span>
+                <small>@Lang.T($"Capacity {days.FirstOrDefault()?.Capacity ?? 6}/day", $"Capacidad {days.FirstOrDefault()?.Capacity ?? 6}/día")</small>
+            </div>
+            <div class="screenBody">
+                <p class="eyebrow">@Lang.T("TEST CALENDAR", "AGENDA DE PRUEBA")</p>
+                <h3>@Lang.T("Choose the first available day", "Elige el primer día disponible")</h3>
+                <p>@Lang.T("A seventh booking on a full day is rejected. This is in-memory demo capacity, not live dispatch.", "La séptima reserva de un día lleno se rechaza. Es capacidad de demo en memoria, no despacho real.")</p>
+                @if (error == "full")
+                {
+                    <div class="context"><p>@Lang.T("That day is full. Pick another date.", "Ese día está lleno. Elige otra fecha.")</p></div>
+                }
+                else if (error == "payment_required")
+                {
+                    <div class="context"><p>@Lang.T("Sandbox payment must be authorized first.", "El pago sandbox debe autorizarse primero.")</p></div>
+                }
+                <form method="post" asp-action="Book" asp-route-id="@Model.Id">
+                    @Html.AntiForgeryToken()
+                    <div class="dateGrid">
+                        @foreach (var day in days)
+                        {
+                            if (day.IsFull)
+                            {
+                                <button type="button" disabled>@day.Date.ToString("ddd, MMM d") <span>@Lang.T("Full", "Lleno") · @day.Used/@day.Capacity</span></button>
+                            }
+                            else
+                            {
+                                <label class="date-option">
+                                    <input type="radio" name="Date" value="@day.Date.ToString("yyyy-MM-dd")" required />
+                                    <span>@day.Date.ToString("ddd, MMM d")</span>
+                                    <small>@Lang.T("Available", "Disponible") · @day.Used/@day.Capacity</small>
+                                </label>
+                            }
+                        }
+                    </div>
+                    <div class="screenNav">
+                        <a href="/project/@Model.Id/pay">@Lang.T("Back", "Atrás")</a>
+                        <button class="continue" type="submit">@Lang.T("Continue →", "Continuar →")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

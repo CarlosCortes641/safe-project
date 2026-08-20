@@ -1,0 +1,51 @@
+@model ProjectRecord
+@{
+    ViewData["Title"] = Lang.T("Sandbox payment", "Pago sandbox");
+}
+@await Html.PartialAsync("_SandboxBanner")
+<section class="pad journey">
+    <div class="journeyShell">
+        <div class="screen">
+            <div class="screenTop">
+                <span>@Model.Id</span>
+                <small>@DemoCopy.PaymentName(Model.PaymentPath, Lang.IsSpanish)</small>
+            </div>
+            <div class="screenBody">
+                <p class="eyebrow">@Lang.T("THREE SEPARATE SANDBOX PATHS", "TRES RUTAS SANDBOX SEPARADAS")</p>
+                <h3>@Lang.T(Model.ProductNameEn, Model.ProductNameEs) · $@Model.PriceUsd.ToString("N0")</h3>
+
+                @if (Model.PaymentPath == PaymentPath.CashSandbox)
+                {
+                    <div class="safeExplainer">
+                        <b>@Lang.T("Hosted checkout sandbox", "Checkout alojado sandbox")</b>
+                        <p>@Lang.T("Simulates a PCI hosted page. No card is collected. Authorization is a local demo event, not a processor charge.", "Simula una página PCI alojada. No se captura tarjeta. La autorización es un evento local, no un cobro real.")</p>
+                    </div>
+                }
+                else if (Model.PaymentPath == PaymentPath.SynchronySandbox)
+                {
+                    <div class="syncHandoff">
+                        <b>Synchrony sandbox</b>
+                        <p>@Lang.T("This demo does not open the live merchant application and does not send Social Security or card data.", "Esta demo no abre la solicitud real del comercio y no envía Seguro Social ni datos de tarjeta.")</p>
+                        <p>@Lang.T("A coordinator would later reconcile the official Synchrony result before a real appointment is confirmed.", "Más adelante un coordinador reconciliaría el resultado oficial de Synchrony antes de confirmar una cita real.")</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="safeExplainer">
+                        <b>Safe 24 · @Lang.T("eligibility sandbox only", "solo sandbox de elegibilidad")</b>
+                        <p>@Lang.T("Safe 24 is not activated. This screen only illustrates $100 initial + 24 planned payments. No contract, disclosure, or charge is created.", "Safe 24 no está activado. Esta pantalla solo ilustra $100 inicial + 24 pagos. No se crea contrato, divulgación ni cobro.")</p>
+                        <p>$100 + $@(((Model.PriceUsd - 100) / 24m).ToString("0.00")) × 24</p>
+                    </div>
+                }
+
+                <form method="post" asp-action="AuthorizeSandbox" asp-route-id="@Model.Id">
+                    @Html.AntiForgeryToken()
+                    <div class="screenNav">
+                        <a href="/project/@Model.Id">@Lang.T("Back", "Atrás")</a>
+                        <button class="continue" type="submit">@Lang.T("Continue →", "Continuar →")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

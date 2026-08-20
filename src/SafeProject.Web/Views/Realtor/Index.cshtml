@@ -1,0 +1,66 @@
+@model RealtorFormRequest
+@{
+    ViewData["Title"] = Lang.T("Realtor request", "Solicitud Realtor");
+    var days = ViewBag.Days as IReadOnlyList<DayCapacity> ?? [];
+}
+@await Html.PartialAsync("_SandboxBanner")
+<section class="property pad">
+    <p>PROPERTY DEAL DESK</p>
+    <h2>@Lang.T("Request a specialist visit", "Solicita una visita especializada")</h2>
+    <div>@Lang.T("This starts a review. Payment at closing is an eligibility evaluation only — not approval and not a live financing product.", "Esto inicia una revisión. El pago al cierre es solo una evaluación de elegibilidad — no es aprobación ni un producto financiero activo.")</div>
+    <form class="realtorBooking" method="post" asp-action="Create" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div class="dealIntake">
+            <label>@Lang.T("Who is requesting?", "¿Quién solicita?")
+                <select asp-for="Role">
+                    <option value="realtor">Realtor</option>
+                    <option value="owner">@Lang.T("Owner / seller", "Propietario / vendedor")</option>
+                    <option value="buyer">@Lang.T("Buyer", "Comprador")</option>
+                    <option value="investor">@Lang.T("Investor", "Inversionista")</option>
+                    <option value="bank">@Lang.T("Bank / lender", "Banco / lender")</option>
+                </select>
+            </label>
+            <label>@Lang.T("Where is the transaction now?", "¿En qué etapa está la transacción?")
+                <select asp-for="Stage">
+                    <option value="inspection">@Lang.T("Inspection findings", "Hallazgos de inspección")</option>
+                    <option value="prelist">@Lang.T("Preparing to list", "Preparando para listar")</option>
+                    <option value="undercontract">@Lang.T("Under contract / bank requirement", "Bajo contrato / banco")</option>
+                    <option value="buyer">@Lang.T("Buyer due diligence", "Due diligence del comprador")</option>
+                </select>
+            </label>
+            <label>@Lang.T("What support is needed first?", "¿Qué apoyo se necesita primero?")
+                <select asp-for="SupportNeed">
+                    <option value="trade">@Lang.T("HVAC or water-heater specialist", "Especialista HVAC o water heater")</option>
+                    <option value="repair">@Lang.T("Repair plan and estimate", "Plan de reparación y estimado")</option>
+                    <option value="bank">@Lang.T("Bank/closing documentation", "Documentación de banco/cierre")</option>
+                    <option value="manage">@Lang.T("Manage approved work", "Gestionar trabajo aprobado")</option>
+                </select>
+            </label>
+            <label>@Lang.T("How may this be paid?", "¿Cómo podría pagarse?")
+                <select asp-for="FundingReview">
+                    <option value="closing_review">@Lang.T("Evaluate payment at closing (review only)", "Evaluar pago al cierre (solo revisión)")</option>
+                    <option value="bank">@Lang.T("Bank/lender requirement support", "Apoyo de requisito de banco")</option>
+                    <option value="direct">@Lang.T("Owner pays directly", "El propietario paga directo")</option>
+                    <option value="finance">@Lang.T("Review other financing", "Revisar otro financiamiento")</option>
+                </select>
+            </label>
+            <label>@Lang.T("Contact", "Contacto")
+                <input asp-for="Contact" placeholder="name@brokerage.com" />
+            </label>
+            <label>@Lang.T("Preferred date", "Fecha preferida")
+                <select asp-for="PreferredDate">
+                    <option value="">@Lang.T("No preference", "Sin preferencia")</option>
+                    @foreach (var day in days)
+                    {
+                        <option value="@day.Date.ToString("yyyy-MM-dd")">@day.Date.ToString("ddd, MMM d")</option>
+                    }
+                </select>
+            </label>
+            <label class="dealUpload">+ @Lang.T("Add inspection report or photos (filename only in this demo)", "Agregar reporte o fotos (solo nombre de archivo en esta demo)")
+                <input asp-for="File" type="file" />
+            </label>
+        </div>
+        <p class="builder-note">@Lang.T("Private files are not stored. Only the file name is recorded for the internal board.", "No se guardan archivos privados. Solo se registra el nombre para el tablero interno.")</p>
+        <button class="primary bookRequest" type="submit">@Lang.T("Submit Realtor request →", "Enviar solicitud Realtor →")</button>
+    </form>
+</section>
