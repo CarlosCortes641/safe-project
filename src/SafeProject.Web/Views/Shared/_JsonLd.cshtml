@@ -1,0 +1,9 @@
+@inject CatalogStore Catalog
+@{
+    var request = Context.Request;
+    var siteUrl = $"{request.Scheme}://{request.Host.Value}";
+    var jsonLd = Catalog.ToJsonLd(siteUrl);
+}
+<script type="application/ld+json">
+@Html.Raw(jsonLd)
+</script>
