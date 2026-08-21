@@ -1,0 +1,66 @@
+@model WaterHeatersViewModel
+@inject CatalogStore Catalog
+@{
+    ViewData["Title"] = Lang.T(
+        "Water Heater Installation Charlotte, NC | Safe Project Solution",
+        "Instalación de Water Heaters Charlotte, NC | Safe Project Solution");
+    ViewData["MetaDescription"] = Lang.T(
+        "Published installed prices for electric, gas, and tankless water heater installation and replacement in Charlotte, NC. Compare cash, Synchrony, and Safe 24.",
+        "Precios instalados de water heaters eléctricos, de gas y tankless en Charlotte, NC. Compara pago completo, Synchrony y Safe 24.");
+    var request = Context.Request;
+    var siteUrl = $"{request.Scheme}://{request.Host.Value}".TrimEnd('/');
+    var serviceJsonLd = Catalog.ToWaterHeaterPageJsonLd(siteUrl);
+}
+<main id="main-content">
+    @await Html.PartialAsync("_SandboxBanner")
+    <section class="hero">
+        <div>
+            <p>WATER HEATERS · CHARLOTTE, NC</p>
+            <h1>@Lang.T("Water Heater Installation in Charlotte, NC", "Instalación de Water Heaters en Charlotte, NC")</h1>
+            <p class="lead">@Lang.T("Safe Project Solution installs and replaces electric, gas, and tankless water heaters with published installed prices for Charlotte, North Carolina and surrounding areas.", "Safe Project Solution instala y reemplaza water heaters eléctricos, de gas y tankless con precios instalados publicados para Charlotte, North Carolina y áreas aledañas.")</p>
+            <div class="choice">
+                <a href="#compare"><b>⚡</b><span>@Lang.T("Match my system", "Encontrar mi sistema")<small>@Lang.T("Electric · gas · tankless", "Eléctrico · gas · tankless") →</small></span></a>
+                <a href="#builder"><b>♨</b><span>@Lang.T("See installed prices", "Ver precios instalados")<small>@Lang.T("Build your plan online", "Arma tu plan en línea") →</small></span></a>
+            </div>
+            <div class="checks">
+                <span>✓ @Lang.T("Standard scope published upfront", "Alcance estándar publicado de antemano")</span>
+                <span>✓ @Lang.T("2-year Safe labor · 5-year manufacturer", "2 años Safe · 5 años fabricante")</span>
+                <span>✓ English / Español</span>
+            </div>
+        </div>
+        <aside>
+            <em>SAFE PROJECT SOLUTION</em>
+            <div>@Lang.T("Installed pricing", "Precios instalados")</div>
+            <strong>@Lang.T("From $1,750", "Desde $1,750")</strong>
+            <span>@Lang.T("Electric · gas · tankless", "Eléctrico · gas · tankless")</span>
+        </aside>
+    </section>
+
+    @await Html.PartialAsync("_WaterHeaterMatch", Model.WaterHeaters)
+    @await Html.PartialAsync("_WaterHeaterBuilder", Model.WaterHeaters)
+    @await Html.PartialAsync("_WaterHeaterScope")
+
+    <section class="facts pad" id="facts">
+        <div class="heading">
+            <p>@Lang.T("VERIFIED WATER HEATER FACTS", "HECHOS VERIFICADOS DE WATER HEATER")</p>
+            <h2>@Lang.T("Clear facts for customers, search engines, and AI agents.", "Hechos claros para clientes, buscadores y agentes de IA.")</h2>
+        </div>
+        <div class="factsGrid">
+            <article><b>@Lang.T("Identity", "Identidad")</b><p>Safe Project Solution by Safe HVAC Solution LLC. Powered by Home Indor Technology Inc.</p></article>
+            <article><b>@Lang.T("Area", "Área")</b><p>@Lang.T("Charlotte, North Carolina and communities approximately one hour away.", "Charlotte, North Carolina y comunidades a aproximadamente una hora.")</p></article>
+            <article><b>@Lang.T("Includes", "Incluye")</b><p>@Lang.T("New equipment, expansion tank when applicable, removal, standard connections, 2-year Safe labor, 5-year manufacturer warranty.", "Equipo nuevo, tanque de expansión cuando aplique, retiro, conexiones estándar, 2 años Safe y 5 años de fabricante.")</p></article>
+            <article><b>@Lang.T("Next step", "Siguiente paso")</b><p>@Lang.T("Build your price online, confirm scope, choose payment path, then schedule installation.", "Arma tu precio en línea, confirma alcance, elige pago y agenda la instalación.")</p></article>
+        </div>
+    </section>
+
+    <section class="closing">
+        <h2>@Lang.T("Ready for hot water with a clear installed price.", "Listo para agua caliente con un precio instalado claro.")</h2>
+        <div class="buttons centered">
+            <a class="primary" href="#builder">@Lang.T("Build my water heater price", "Armar mi precio de water heater") →</a>
+            <a class="dark" href="/">@Lang.T("Back to home", "Volver al inicio")</a>
+        </div>
+    </section>
+</main>
+<script type="application/ld+json">
+@Html.Raw(serviceJsonLd)
+</script>

@@ -1,0 +1,33 @@
+@model IReadOnlyList<WaterHeaterProduct>
+<section class="finder pad" id="compare">
+    <div class="heading">
+        <p>@Lang.T("QUICK PRODUCT MATCH", "COINCIDENCIA RÁPIDA DE PRODUCTO")</p>
+        <h2>@Lang.T("Tell us what you have. Start with the right water heater path.", "Dinos qué tienes. Empieza por el camino correcto de water heater.")</h2>
+    </div>
+    <div class="finderGrid">
+        <article>
+            <span>⚡</span>
+            <h3>@Lang.T("Electric tank", "Tanque eléctrico")</h3>
+            <p>@Lang.T("Your current tank is electric and you want a straightforward 40-, 50-, or 60-gallon replacement.", "Tu tanque actual es eléctrico y quieres un reemplazo directo de 40, 50 o 60 galones.")</p>
+            <a href="#builder">@Lang.T("See electric installed prices", "Ver precios eléctricos") →</a>
+        </article>
+        <article>
+            <span>🔥</span>
+            <h3>@Lang.T("Gas tank", "Tanque de gas")</h3>
+            <p>@Lang.T("Your current tank uses natural gas and the replacement is expected to keep the same fuel and location.", "Tu tanque usa gas natural y el reemplazo mantiene el mismo combustible y ubicación.")</p>
+            <a href="#builder">@Lang.T("See gas installed prices", "Ver precios de gas") →</a>
+        </article>
+        <article>
+            <span>∞</span>
+            <h3>Tankless</h3>
+            <p>@Lang.T("You want continuous hot water or a conversion. Gas, electrical, venting, condensate, and access require verification.", "Quieres agua caliente continua o una conversión. Gas, electricidad, ventilación y acceso requieren verificación.")</p>
+            <a href="#builder">@Lang.T("Compare tankless paths", "Comparar tankless") →</a>
+        </article>
+        <article>
+            <span>?</span>
+            <h3>@Lang.T("Not sure yet", "Aún no estoy seguro")</h3>
+            <p>@Lang.T("Build a starting price online, then Safe confirms fuel type, location, and scope before any work is authorized.", "Arma un precio inicial en línea; Safe confirma combustible, ubicación y alcance antes de autorizar el trabajo.")</p>
+            <a href="#builder">@Lang.T("Build my installed price", "Armar mi precio instalado") →</a>
+        </article>
+    </div>
+</section>

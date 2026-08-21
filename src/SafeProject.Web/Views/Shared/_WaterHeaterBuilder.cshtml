@@ -1,0 +1,75 @@
+@model IReadOnlyList<WaterHeaterProduct>
+@{
+    var first = Model[0];
+}
+<section class="pad" id="builder" data-safe-builder>
+    <div class="heading">
+        <p>@Lang.T("SAFE DIRECT · ONLINE PRICE BUILDER", "SAFE DIRECT · CALCULADORA DE PRECIO")</p>
+        <h2>@Lang.T("Build your water-heater plan", "Construye tu plan de water heater")</h2>
+        <div>@Lang.T("Choose a product, see the installed price, compare Synchrony, Safe 24, and cash, then continue through the complete Safe project path.", "Elige un producto, mira el precio instalado, compara Synchrony, Safe 24 y cash, y continúa por la ruta completa del proyecto Safe.")</div>
+    </div>
+    <div class="quote">
+        <div class="select">
+            <label for="zip">@Lang.T("Installation ZIP", "ZIP de instalación")
+                <input id="zip" name="zip" placeholder="28202" maxlength="5" inputmode="numeric" />
+            </label>
+            <h3>@Lang.T("Choose your system", "Elige tu sistema")</h3>
+            @foreach (var product in Model)
+            {
+                <button type="button"
+                        class="product-btn@(product.Id == first.Id ? " on" : "")"
+                        data-id="@product.Id"
+                        data-price="@product.PriceUsd"
+                        data-name="@Lang.T(product.NameEn, product.NameEs)">
+                    <span>@product.Icon @Lang.T(product.NameEn, product.NameEs)</span>
+                    <b>$@product.PriceUsd.ToString("N0")</b>
+                </button>
+            }
+        </div>
+        <div class="result">
+            <small>@Lang.T("YOUR SELECTION", "TU SELECCIÓN")</small>
+            <h3 data-selected-name>@Lang.T(first.NameEn, first.NameEs)</h3>
+            <h4 class="payQuestion">@Lang.T("How would you like to pay?", "¿Cómo prefieres pagar?")</h4>
+            <div class="payments three paymentChoices">
+                <button type="button" class="selected" data-pay="cash">
+                    <small>@Lang.T("PAY IN FULL", "PAGO COMPLETO")</small>
+                    <strong data-cash-price>$@first.PriceUsd.ToString("N0")</strong>
+                    <span>@Lang.T("No financing · secure checkout after scope confirmation", "Sin financiamiento · pago seguro después de confirmar el alcance")</span>
+                </button>
+                <button type="button" class="sync" data-pay="sync">
+                    <small>SYNCHRONY</small>
+                    <strong>@Lang.T("Possible $0 down*", "Posible $0 inicial*")</strong>
+                    <span>@Lang.T("Sandbox only · subject to Synchrony approval in production", "Solo sandbox · en producción la aprobación la define Synchrony")</span>
+                </button>
+                <button type="button" data-pay="safe24">
+                    <small>SAFE 24</small>
+                    <strong data-safe24-price>$100 @Lang.T("initial", "inicial")</strong>
+                    <span data-safe24-monthly data-monthly-suffix="@Lang.T("illustrated payments*", "pagos ilustrativos*")">$@(((first.PriceUsd - 100) / 24m).ToString("0.00")) @Lang.T("× 24 illustrated payments*", "× 24 pagos ilustrativos*")</span>
+                </button>
+            </div>
+            <div class="included">
+                <h4>@Lang.T("Standard installation includes", "La instalación estándar incluye")</h4>
+                <span>✓ @Lang.T("New water heater", "Water heater nuevo")</span>
+                <span>✓ @Lang.T("Expansion tank when applicable", "Tanque de expansión cuando aplique")</span>
+                <span>✓ @Lang.T("Removal of existing tank", "Retiro del tanque existente")</span>
+                <span>✓ @Lang.T("Standard connections & startup", "Conexiones estándar y arranque")</span>
+                <span>✓ @Lang.T("2-year Safe labor warranty", "2 años de garantía de mano de obra Safe")</span>
+                <span>✓ @Lang.T("5-year manufacturer warranty", "5 años de garantía del fabricante")</span>
+            </div>
+            <form class="paymentNext" method="post" asp-controller="Project" asp-action="Start" data-start-form>
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="Kind" value="water" />
+                <input type="hidden" name="ProductId" value="@first.Id" data-product-id />
+                <input type="hidden" name="Zip" value="28202" data-zip />
+                <input type="hidden" name="PaymentPath" value="CashSandbox" data-pay-path />
+                <button class="primary" type="submit" data-start-cta data-cta-cash="@Lang.T("Continue to inspection, then secure payment", "Continuar a inspección y después al pago seguro")" data-cta-sync="@Lang.T("Continue to inspection", "Continuar a la inspección")" data-cta-safe24="@Lang.T("Continue to Safe 24 eligibility review", "Continuar a revisión de elegibilidad Safe 24")">@Lang.T("Continue to inspection, then secure payment", "Continuar a inspección y después al pago seguro") <b>→</b></button>
+                <span class="textLink">@Lang.T("Synchrony and Safe 24 stay in sandbox. No live applications or charges.", "Synchrony y Safe 24 siguen en sandbox. Sin solicitudes ni cargos reales.")</span>
+            </form>
+            <p class="legal">* @Lang.T("Synchrony: $0 down may be available for approved applicants; actual promotions, APR, term, and payment are determined by Synchrony. Safe 24: illustrative $100 initial payment plus 24 payments shown before any approved finance charge. Eligibility, total of payments, and final scope are disclosed before signing.", "Synchrony: $0 inicial puede estar disponible para solicitantes aprobados; las promociones, APR, plazo y pago los determina Synchrony. Safe 24: ejemplo de $100 inicial más 24 pagos mostrados antes de cualquier cargo financiero aprobado. La elegibilidad, total de pagos y alcance final se informan antes de firmar.")</p>
+        </div>
+    </div>
+    <div class="notice">
+        <b>∞ TANKLESS</b>
+        <span>@Lang.T("Gas line, electrical panel/circuits, venting, condensate, recirculation, permits, and non-standard access are verified and priced separately when required.", "Línea de gas, panel/circuitos, ventilación, condensado, recirculación, permisos y acceso no estándar se verifican y cotizan por separado.")</span>
+    </div>
+</section>

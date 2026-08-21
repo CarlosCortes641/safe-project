@@ -2,6 +2,9 @@
     var title = ViewData["Title"] as string ?? Lang.T(
         "HVAC & Water Heater Installation Charlotte | Safe Project Solution",
         "Instalación HVAC y Water Heaters Charlotte | Safe Project Solution");
+    var description = ViewData["MetaDescription"] as string ?? Lang.T(
+        "Published installed prices for water heaters and HVAC replacement in Charlotte. Compare cash, Synchrony and Safe 24.",
+        "Precios instalados de water heaters y reemplazo HVAC en Charlotte. Compara pago completo, Synchrony y Safe 24.");
     var returnUrl = Context.Request.Path + Context.Request.QueryString;
 }
 <!DOCTYPE html>
@@ -10,13 +13,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@title</title>
-    <meta name="description" content="@Lang.T(
-        "Published installed prices for water heaters and HVAC replacement in Charlotte. Compare cash, Synchrony and Safe 24.",
-        "Precios instalados de water heaters y reemplazo HVAC en Charlotte. Compara pago completo, Synchrony y Safe 24.")" />
+    <meta name="description" content="@description" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <a class="skip" href="#compare">@Lang.T("Skip to product choices", "Ir a opciones de productos")</a>
+    <a class="skip" href="/water-heaters#compare">@Lang.T("Skip to product choices", "Ir a opciones de productos")</a>
     <div class="top">
         <span>@Lang.T("CHARLOTTE-ROOTED · HOMEOWNERS · REALTORS · INVESTORS", "CON RAÍCES EN CHARLOTTE · PROPIETARIOS · REALTORS · INVERSIONISTAS")</span>
         <span>@Lang.T("Charlotte + 1-hour radius", "Charlotte + 1 hora alrededor")</span>
@@ -27,8 +28,8 @@
             <i>PROJECT SOLUTION<small>BY SAFE HVAC SOLUTION LLC · POWERED BY HOME INDOR TECHNOLOGY INC.</small></i>
         </a>
         <nav>
-            <a href="/#compare">@Lang.T("Start here", "Empieza aquí")</a>
-            <a href="/#builder">Water heaters</a>
+            <a href="/water-heaters">@Lang.T("Start here", "Empieza aquí")</a>
+            <a href="/water-heaters">Water heaters</a>
             <a href="/#hvac">HVAC</a>
             <a href="/realtor">Realtors</a>
             <a href="/#plans">@Lang.T("Payment", "Pago")</a>
@@ -47,6 +48,7 @@
         <div>
             <a href="tel:@CatalogStore.PhoneTel">@Lang.T("Call or text:", "Llama o escribe:") @CatalogStore.PhoneDisplay</a>
             <a href="mailto:@CatalogStore.Email">@CatalogStore.Email</a>
+            <a href="/water-heaters">Water heaters</a>
             <a href="/catalog.json">catalog.json</a>
             <a href="/ops">@Lang.T("Internal board", "Tablero interno")</a>
         </div>

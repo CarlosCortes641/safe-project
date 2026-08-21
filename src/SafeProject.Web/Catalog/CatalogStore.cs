@@ -242,7 +242,7 @@ public sealed class CatalogStore
                 ["availableChannel"] = new Dictionary<string, object?>
                 {
                     ["@type"] = "ServiceChannel",
-                    ["serviceUrl"] = root + "/#builder",
+                    ["serviceUrl"] = root + "/water-heaters",
                     ["servicePhone"] = new Dictionary<string, object?>
                     {
                         ["@type"] = "ContactPoint",
@@ -293,6 +293,109 @@ public sealed class CatalogStore
         {
             ["@context"] = "https://schema.org",
             ["@graph"] = graph
+        };
+
+        return JsonSerializer.Serialize(document, JsonLdOptions);
+    }
+
+    /// <summary>
+    /// Focused Schema.org JSON-LD for the indexable /water-heaters landing page.
+    /// </summary>
+    public string ToWaterHeaterPageJsonLd(string siteUrl)
+    {
+        var root = siteUrl.TrimEnd('/');
+        var pageUrl = root + "/water-heaters";
+        var businessId = $"{root}/#business";
+
+        var document = new Dictionary<string, object?>
+        {
+            ["@context"] = "https://schema.org",
+            ["@graph"] = new object[]
+            {
+                new Dictionary<string, object?>
+                {
+                    ["@type"] = "WebPage",
+                    ["@id"] = pageUrl + "#webpage",
+                    ["url"] = pageUrl,
+                    ["name"] = "Water Heater Installation in Charlotte, NC",
+                    ["description"] =
+                        "Published installed prices for electric, gas, and tankless water heater installation and replacement in Charlotte, NC.",
+                    ["isPartOf"] = new Dictionary<string, object?>
+                    {
+                        ["@type"] = "WebSite",
+                        ["name"] = BrandName,
+                        ["url"] = root + "/"
+                    },
+                    ["about"] = new Dictionary<string, object?> { ["@id"] = pageUrl + "#service" },
+                    ["breadcrumb"] = new Dictionary<string, object?>
+                    {
+                        ["@type"] = "BreadcrumbList",
+                        ["itemListElement"] = new object[]
+                        {
+                            new Dictionary<string, object?>
+                            {
+                                ["@type"] = "ListItem",
+                                ["position"] = 1,
+                                ["name"] = "Home",
+                                ["item"] = root + "/"
+                            },
+                            new Dictionary<string, object?>
+                            {
+                                ["@type"] = "ListItem",
+                                ["position"] = 2,
+                                ["name"] = "Water heaters",
+                                ["item"] = pageUrl
+                            }
+                        }
+                    }
+                },
+                new Dictionary<string, object?>
+                {
+                    ["@type"] = "Service",
+                    ["@id"] = pageUrl + "#service",
+                    ["name"] = "Water heater installation and replacement",
+                    ["serviceType"] = "Water heater installation",
+                    ["url"] = pageUrl,
+                    ["provider"] = new Dictionary<string, object?>
+                    {
+                        ["@type"] = "HVACBusiness",
+                        ["@id"] = businessId,
+                        ["name"] = BrandName,
+                        ["telephone"] = PhoneSchema,
+                        ["email"] = Email
+                    },
+                    ["areaServed"] = new Dictionary<string, object?>
+                    {
+                        ["@type"] = "City",
+                        ["name"] = "Charlotte",
+                        ["containedInPlace"] = new Dictionary<string, object?>
+                        {
+                            ["@type"] = "State",
+                            ["name"] = "North Carolina"
+                        }
+                    },
+                    ["description"] =
+                        "New equipment, expansion tank when applicable, removal, standard connections, 2-year Safe labor, 5-year manufacturer warranty. Tank and tankless options with published installed prices.",
+                    ["hasOfferCatalog"] = new Dictionary<string, object?>
+                    {
+                        ["@type"] = "OfferCatalog",
+                        ["name"] = "Water heater installed prices",
+                        ["itemListElement"] = WaterHeaters.Select(p => new Dictionary<string, object?>
+                        {
+                            ["@type"] = "Offer",
+                            ["url"] = pageUrl + "#builder",
+                            ["price"] = p.PriceUsd.ToString(),
+                            ["priceCurrency"] = "USD",
+                            ["itemOffered"] = new Dictionary<string, object?>
+                            {
+                                ["@type"] = "Service",
+                                ["name"] = p.NameEn,
+                                ["serviceType"] = "Water heater installation"
+                            }
+                        }).ToArray()
+                    }
+                }
+            }
         };
 
         return JsonSerializer.Serialize(document, JsonLdOptions);
