@@ -6,6 +6,7 @@
         "Published installed prices for water heaters and HVAC replacement in Charlotte. Compare cash, Synchrony and Safe 24.",
         "Precios instalados de water heaters y reemplazo HVAC en Charlotte. Compara pago completo, Synchrony y Safe 24.");
     var returnUrl = Context.Request.Path + Context.Request.QueryString;
+    var canonical = PublicUrl.Base(Context.Request) + Context.Request.Path.Value;
 }
 <!DOCTYPE html>
 <html lang="@Lang.HtmlLang">
@@ -14,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@title</title>
     <meta name="description" content="@description" />
+    <link rel="canonical" href="@canonical" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>

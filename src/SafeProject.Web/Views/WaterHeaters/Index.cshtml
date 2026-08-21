@@ -7,8 +7,7 @@
     ViewData["MetaDescription"] = Lang.T(
         "Published installed prices for electric, gas, and tankless water heater installation and replacement in Charlotte, NC. Compare cash, Synchrony, and Safe 24.",
         "Precios instalados de water heaters eléctricos, de gas y tankless en Charlotte, NC. Compara pago completo, Synchrony y Safe 24.");
-    var request = Context.Request;
-    var siteUrl = $"{request.Scheme}://{request.Host.Value}".TrimEnd('/');
+    var siteUrl = PublicUrl.Base(Context.Request);
     var serviceJsonLd = Catalog.ToWaterHeaterPageJsonLd(siteUrl);
 }
 <main id="main-content">

@@ -13,7 +13,8 @@ public class LanguageController : Controller
         {
             Expires = DateTimeOffset.UtcNow.AddYears(1),
             IsEssential = true,
-            HttpOnly = false,
+            HttpOnly = true,
+            Secure = !PublicUrl.IsLocal(Request),
             SameSite = SameSiteMode.Lax,
             Path = "/"
         });
