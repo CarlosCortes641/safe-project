@@ -14,5 +14,5 @@ services:
         value: "0"
       - key: DOTNET_EnableDiagnostics
         value: "0"
-      - key: DOTNET_GCHeapHardLimit
-        value: "201326592"
+      - key: DOTNET_GCConserveMemory
+        value: "9"

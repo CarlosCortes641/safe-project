@@ -10,14 +10,17 @@ RUN dotnet publish src/SafeProject.Web/SafeProject.Web.csproj \
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
-# Render Free = 512 MB. Keep workstation GC, small heap, few threads.
+# Render Free = 512 MB. Workstation GC + conserve memory.
+# Do NOT set GCHeapHardLimit: hitting it aborts with exit 134.
 ENV ASPNETCORE_ENVIRONMENT=Production \
     DOTNET_EnableDiagnostics=0 \
     DOTNET_GCServer=0 \
-    DOTNET_GCHeapHardLimit=201326592 \
+    DOTNET_GCConserveMemory=9 \
     DOTNET_ThreadPool_ForceMinWorkerThreads=1 \
     DOTNET_ThreadPool_ForceMaxWorkerThreads=4
 
 EXPOSE 8080
-ENTRYPOINT ["/bin/sh", "-c", "dotnet SafeProject.Web.dll --urls http://0.0.0.0:${PORT:-8080}"]
+ENTRYPOINT ["/app/start.sh"]
