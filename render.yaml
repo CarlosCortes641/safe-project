@@ -6,7 +6,7 @@ services:
     region: oregon
     dockerfilePath: ./Dockerfile
     dockerContext: .
-    healthCheckPath: /
+    healthCheckPath: /health
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
@@ -15,4 +15,4 @@ services:
       - key: DOTNET_EnableDiagnostics
         value: "0"
       - key: DOTNET_GCHeapHardLimit
-        value: "268435456"
+        value: "201326592"

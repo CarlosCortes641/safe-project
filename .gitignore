@@ -6,3 +6,4 @@ obj/
 *.suo
 appsettings.*.local.json
 .DS_Store
+.publish-test/

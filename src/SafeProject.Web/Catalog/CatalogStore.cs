@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -39,6 +40,8 @@ public sealed class CatalogStore
         WriteIndented = false
     };
 
+    private readonly ConcurrentDictionary<string, string> _jsonLdCache = new(StringComparer.Ordinal);
+
     public IReadOnlyList<WaterHeaterProduct> WaterHeaters { get; } =
     [
         new("wh-electric-40-50", "Electric 40/50 gal", "Eléctrico 40/50 gal", 1750, false, "⚡"),
@@ -62,6 +65,11 @@ public sealed class CatalogStore
     public string ToJsonLd(string siteUrl)
     {
         var root = siteUrl.TrimEnd('/');
+        return _jsonLdCache.GetOrAdd("business:" + root, _ => BuildBusinessJsonLd(root));
+    }
+
+    private string BuildBusinessJsonLd(string root)
+    {
         var businessId = $"{root}/#business";
         var orgId = $"{root}/#organization";
         var waterHeaterServiceId = $"{root}/#service-water-heater";
@@ -304,6 +312,11 @@ public sealed class CatalogStore
     public string ToWaterHeaterPageJsonLd(string siteUrl)
     {
         var root = siteUrl.TrimEnd('/');
+        return _jsonLdCache.GetOrAdd("water:" + root, _ => BuildWaterHeaterPageJsonLd(root));
+    }
+
+    private string BuildWaterHeaterPageJsonLd(string root)
+    {
         var pageUrl = root + "/water-heaters";
         var businessId = $"{root}/#business";
 

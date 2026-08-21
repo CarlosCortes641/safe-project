@@ -6,3 +6,6 @@
 **/.DS_Store
 **/appsettings.*.local.json
 docs/
+.publish-test/
+# Scaffold libs unused by the site; ~9MB that only hurts Free-tier memory.
+**/wwwroot/lib/

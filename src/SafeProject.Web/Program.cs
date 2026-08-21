@@ -39,6 +39,9 @@ app.Use(async (context, next) =>
 app.UseRouting();
 app.UseAuthorization();
 
+// Lightweight probe for Render Free — avoids compiling/rendering the full home page on boot.
+app.MapGet("/health", () => Results.Text("ok"));
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
