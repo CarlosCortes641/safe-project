@@ -3,7 +3,7 @@
 Website comercial desktop-first para Safe HVAC Solution LLC.
 Stack inicial: ASP.NET Core 8 MVC + Razor + CSS + JavaScript.
 
-Por agilidad, **no hay base de datos**. Catálogo, precios, capacidad de agenda y textos EN/ES están hardcodeados en `CatalogStore` y las vistas.
+Por agilidad, **no hay base de datos**. Catálogo, precios, capacidad de agenda y textos EN/ES viven hardcodeados en `CatalogStore` y las vistas.
 
 ## Correr
 
@@ -27,14 +27,12 @@ Luego abre `http://localhost:5118`.
 
 **No activado:** pagos reales, Safe 24 productivo, ni pago al cierre.
 
-## Publicar (gratis en Render)
+## Publicar (Azure App Service)
 
-1. Sube este repo a GitHub.
-2. En [Render](https://render.com): **New → Web Service** → conecta el repo.
-3. Runtime: **Docker** (usa el `Dockerfile` de la raíz).
-4. Tras el deploy, abre la URL `*.onrender.com`.
-
-El plan free se duerme sin tráfico; el primer request puede tardar ~30–60s.
+1. Crea un **Web App** en Azure: runtime **.NET 8**, publicar **Código**.
+2. En el App Service → **Deployment Center** → GitHub → repo `safe-project`, branch `main`.
+3. Opcional: Application setting `ASPNETCORE_ENVIRONMENT=Production`.
+4. Health check (opcional): `/health`.
 
 ## Todavía no
 
