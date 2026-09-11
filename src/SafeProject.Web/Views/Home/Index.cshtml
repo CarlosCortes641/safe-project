@@ -229,11 +229,14 @@
 
     @await Html.PartialAsync("_ContactCtas")
 
-    <section class="closing">
-        <h2>@Lang.T("Comfort now. A payment path that fits.", "Confort ahora. Una ruta de pago que encaja.")</h2>
-        <div class="buttons centered">
-            <a class="primary" href="#hvac">@Lang.T("Price HVAC", "Cotizar HVAC") →</a>
-            <a class="dark" href="/water-heaters">@Lang.T("Price a water heater", "Cotizar water heater") →</a>
-        </div>
-    </section>
+    @{
+        ViewData["ClosingTitle"] = Lang.T("Comfort now.", "Confort ahora.");
+        ViewData["ClosingBody"] = Lang.T("A payment path that fits.", "Una ruta de pago que encaja.");
+        ViewData["ClosingPrimary"] = Lang.T("Price HVAC", "Cotizar HVAC");
+        ViewData["ClosingPrimaryHref"] = "#hvac";
+        ViewData["ClosingSecondary"] = Lang.T("Price a water heater", "Cotizar water heater");
+        ViewData["ClosingSecondaryHref"] = "/water-heaters";
+        ViewData["ClosingMicro"] = Lang.T("Charlotte + 1-hour radius. Published scope before you schedule.", "Charlotte + 1 hora alrededor. Alcance publicado antes de agendar.");
+    }
+    @await Html.PartialAsync("_SiteClosing")
 </main>

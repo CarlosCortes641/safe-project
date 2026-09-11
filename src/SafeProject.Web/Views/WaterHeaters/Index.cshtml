@@ -54,13 +54,16 @@
 
     @await Html.PartialAsync("_ContactCtas")
 
-    <section class="closing">
-        <h2>@Lang.T("Ready for hot water with a clear installed price.", "Listo para agua caliente con un precio instalado claro.")</h2>
-        <div class="buttons centered">
-            <a class="primary" href="#builder">@Lang.T("Build my water heater price", "Armar mi precio de water heater") →</a>
-            <a class="dark" href="/">@Lang.T("Back to home", "Volver al inicio")</a>
-        </div>
-    </section>
+    @{
+        ViewData["ClosingTitle"] = Lang.T("Ready for hot water.", "Listo para agua caliente.");
+        ViewData["ClosingBody"] = Lang.T("Clear installed price.", "Precio instalado claro.");
+        ViewData["ClosingPrimary"] = Lang.T("Build my water heater price", "Armar mi precio de water heater");
+        ViewData["ClosingPrimaryHref"] = "#builder";
+        ViewData["ClosingSecondary"] = Lang.T("Back to home", "Volver al inicio");
+        ViewData["ClosingSecondaryHref"] = "/";
+        ViewData["ClosingMicro"] = Lang.T("Text a photo of your tank label — we’ll confirm the right replacement.", "Envía una foto de la etiqueta del tanque — confirmamos el reemplazo correcto.");
+    }
+    @await Html.PartialAsync("_SiteClosing")
 </main>
 <script type="application/ld+json">
 @Html.Raw(serviceJsonLd)

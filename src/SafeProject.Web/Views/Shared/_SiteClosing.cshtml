@@ -1,0 +1,27 @@
+@{
+    var title = ViewData["ClosingTitle"] as string ?? "";
+    var body = ViewData["ClosingBody"] as string;
+    var primary = ViewData["ClosingPrimary"] as string ?? "";
+    var primaryHref = ViewData["ClosingPrimaryHref"] as string ?? "#";
+    var secondary = ViewData["ClosingSecondary"] as string ?? "";
+    var secondaryHref = ViewData["ClosingSecondaryHref"] as string ?? "#";
+    var micro = ViewData["ClosingMicro"] as string;
+}
+<section class="closing" aria-labelledby="closing-title">
+    <div class="closingInner">
+        <p class="closingMark" aria-hidden="true">SAFE</p>
+        <h2 id="closing-title">@title</h2>
+        @if (!string.IsNullOrWhiteSpace(body))
+        {
+            <p class="closingBody">@body</p>
+        }
+        <div class="closingActions">
+            <a class="primary" href="@primaryHref">@primary <span aria-hidden="true">→</span></a>
+            <a class="closingLink" href="@secondaryHref">@secondary <span aria-hidden="true">↗</span></a>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(micro))
+        {
+            <small class="closingMicro">@micro</small>
+        }
+    </div>
+</section>

@@ -42,20 +42,38 @@
     </header>
     @RenderBody()
     <footer>
-        <div>
-            <strong>Safe Project Solution</strong>
-            <p>@Lang.T("by Safe HVAC Solution LLC. Powered by Home Indor Technology Inc.", "por Safe HVAC Solution LLC. Powered by Home Indor Technology Inc.")</p>
-            <p>@Lang.T("Charlotte, North Carolina and communities approximately one hour away.", "Charlotte, North Carolina y comunidades a aproximadamente una hora.")</p>
+        <div class="footerTop">
+            <div class="footerBrand">
+                <strong>Safe Project Solution</strong>
+                <p>@Lang.T("Published installed prices for HVAC and water heaters in Charlotte — cash, Synchrony, and Safe 24 paths.", "Precios instalados de HVAC y water heaters en Charlotte — rutas de pago completo, Synchrony y Safe 24.")</p>
+                <a class="footerEmail" href="mailto:@CatalogStore.Email">@CatalogStore.Email</a>
+            </div>
+            <div class="footerLinks">
+                <div>
+                    <p>@Lang.T("Explore", "Explorar")</p>
+                    <a href="/#check">@Lang.T("Start here", "Empieza aquí")</a>
+                    <a href="/water-heaters">Water heaters</a>
+                    <a href="/#hvac">HVAC</a>
+                    <a href="/#plans">@Lang.T("Payment", "Pago")</a>
+                    <a href="/realtor">Realtors</a>
+                </div>
+                <div>
+                    <p>@Lang.T("Contact", "Contacto")</p>
+                    <a href="sms:@CatalogStore.TextTel">@Lang.T("Text", "Texto") @CatalogStore.TextShort</a>
+                    <a href="tel:@CatalogStore.PhoneTel">@Lang.T("Call", "Llamar") @CatalogStore.PhonePlain</a>
+                    <a href="mailto:@CatalogStore.Email">Email</a>
+                </div>
+                <div>
+                    <p>@Lang.T("Company", "Empresa")</p>
+                    <a href="/ops">@Lang.T("Internal board", "Tablero interno")</a>
+                    <a href="/catalog.json">catalog.json</a>
+                </div>
+            </div>
         </div>
-        <div>
-            <a href="sms:@CatalogStore.TextTel">@Lang.T("Text:", "Texto:") @CatalogStore.TextShort</a>
-            <a href="tel:@CatalogStore.PhoneTel">@Lang.T("Call:", "Llamar:") @CatalogStore.PhonePlain</a>
-            <a href="mailto:@CatalogStore.Email">@CatalogStore.Email</a>
-            <a href="/water-heaters">Water heaters</a>
-            <a href="/catalog.json">catalog.json</a>
-            <a href="/ops">@Lang.T("Internal board", "Tablero interno")</a>
+        <div class="footerBottom">
+            <span>© @DateTime.UtcNow.Year Safe HVAC Solution LLC · Home Indor Technology Inc.</span>
+            <span>@Lang.T("Sandbox website. No live payments, no live Safe 24, no payment-at-closing.", "Website sandbox. Sin pagos reales, sin Safe 24 productivo, sin pago al cierre.")</span>
         </div>
-        <small>@Lang.T("Sandbox website. No live payments, no live Safe 24, no payment-at-closing.", "Website sandbox. Sin pagos reales, sin Safe 24 productivo, sin pago al cierre.")</small>
     </footer>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
