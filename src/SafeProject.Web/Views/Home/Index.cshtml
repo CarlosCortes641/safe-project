@@ -227,6 +227,8 @@
         <details><summary>@Lang.T("Does this reserve an appointment?", "¿Esto reserva una cita?")</summary><p>@Lang.T("No. Safe first confirms scope, price, and availability.", "No. Safe primero confirma alcance, precio y disponibilidad.")</p></details>
     </section>
 
+    @await Html.PartialAsync("_ContactCtas")
+
     <section class="closing">
         <h2>@Lang.T("Comfort now. A payment path that fits.", "Confort ahora. Una ruta de pago que encaja.")</h2>
         <div class="buttons centered">

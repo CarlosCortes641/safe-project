@@ -1356,3 +1356,60 @@ padding-right:calc((100vw - 1280px) / 2 + 7vw)
 }
 }
 
+.contactCtas{
+background:#eef1f4;
+text-align:left}
+.contactCtas .heading{
+max-width:720px}
+.contactStack{
+display:flex;
+flex-direction:column;
+align-items:flex-start;
+gap:14px;
+margin-top:28px;
+max-width:420px}
+.contactBtn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+min-width:280px;
+width:100%;
+padding:16px 22px;
+border-radius:10px;
+font-size:16px;
+font-weight:800;
+line-height:1.2;
+text-align:center;
+box-shadow:0 8px 18px #1324331f;
+transition:transform .15s ease, box-shadow .15s ease, background .15s ease}
+.contactBtn:hover{
+transform:translateY(-1px);
+box-shadow:0 12px 22px #13243328}
+.contactBtn--primary{
+background:#e11d2e;
+color:#fff;
+border:0}
+.contactBtn--primary:hover{
+background:#c41626;
+color:#fff}
+.contactBtn--call{
+background:#fff;
+color:#0b2c4a;
+border:1px solid #c9d4dc;
+max-width:300px}
+.contactBtn--call:hover{
+background:#f7fafb;
+color:#0b2c4a}
+.contactLegal{
+margin-top:18px;
+max-width:720px;
+font-size:12px;
+line-height:1.55;
+color:#667680}
+@media(max-width:600px){
+.contactStack,.contactBtn,.contactBtn--call{
+max-width:none;
+min-width:0;
+width:100%}
+}
+

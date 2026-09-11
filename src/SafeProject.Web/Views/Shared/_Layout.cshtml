@@ -48,7 +48,8 @@
             <p>@Lang.T("Charlotte, North Carolina and communities approximately one hour away.", "Charlotte, North Carolina y comunidades a aproximadamente una hora.")</p>
         </div>
         <div>
-            <a href="tel:@CatalogStore.PhoneTel">@Lang.T("Call or text:", "Llama o escribe:") @CatalogStore.PhoneDisplay</a>
+            <a href="sms:@CatalogStore.TextTel">@Lang.T("Text:", "Texto:") @CatalogStore.TextShort</a>
+            <a href="tel:@CatalogStore.PhoneTel">@Lang.T("Call:", "Llamar:") @CatalogStore.PhonePlain</a>
             <a href="mailto:@CatalogStore.Email">@CatalogStore.Email</a>
             <a href="/water-heaters">Water heaters</a>
             <a href="/catalog.json">catalog.json</a>
