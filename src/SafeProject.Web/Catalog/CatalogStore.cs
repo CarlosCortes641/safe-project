@@ -25,13 +25,13 @@ public sealed record ScheduleDay(DateOnly Date, bool IsFull);
 public sealed class CatalogStore
 {
     public const int InstallationCapacityPerDay = 6;
-    public const string PhoneDisplay = "(980) 447-0919";
-    public const string PhoneTel = "+19804470919";
-    public const string PhoneSchema = "+1-980-447-0919";
-    public const string PhonePlain = "980-447-0919";
-    public const string TextDisplay = "+1 (980) 844-7180";
-    public const string TextTel = "+19808447180";
-    public const string TextShort = "980-844-7180";
+    public const string PhoneDisplay = "(704) 268-4104";
+    public const string PhoneTel = "+17042684104";
+    public const string PhoneSchema = "+1-704-268-4104";
+    public const string PhonePlain = "704-268-4104";
+    public const string TextDisplay = "+1 (704) 268-4104";
+    public const string TextTel = "+17042684104";
+    public const string TextShort = "704-268-4104";
     public const string Email = "safehvacsolution@gmail.com";
     public const string BrandName = "Safe Project Solution";
     public const string LegalName = "Safe HVAC Solution LLC";
