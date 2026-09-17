@@ -58,9 +58,41 @@ app.UseCookiePolicy();
 app.UseStaticFiles();
 app.Use(async (context, next) =>
 {
-    var code = string.Equals(context.Request.Cookies[SiteLanguage.CookieName], "es", StringComparison.OrdinalIgnoreCase)
+    var langQ = context.Request.Query["lang"].FirstOrDefault();
+    if (!string.IsNullOrWhiteSpace(langQ))
+    {
+        var lang = string.Equals(langQ, "es", StringComparison.OrdinalIgnoreCase) ? "es" : "en";
+        context.Response.Cookies.Append(SiteLanguage.CookieName, lang, new CookieOptions
+        {
+            Expires = DateTimeOffset.UtcNow.AddYears(1),
+            IsEssential = true,
+            HttpOnly = true,
+            Secure = !PublicUrl.IsLocal(context.Request),
+            SameSite = SameSiteMode.Lax,
+            Path = "/"
+        });
+    }
+
+    var cookieLang = context.Request.Cookies[SiteLanguage.CookieName];
+    if (string.IsNullOrWhiteSpace(cookieLang) && !string.IsNullOrWhiteSpace(langQ))
+    {
+        cookieLang = string.Equals(langQ, "es", StringComparison.OrdinalIgnoreCase) ? "es" : "en";
+    }
+
+    var code = string.Equals(cookieLang, "es", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(langQ, "es", StringComparison.OrdinalIgnoreCase)
         ? "es-US"
         : "en-US";
+    // Prefer explicit query for this request even before cookie is readable on same response
+    if (string.Equals(langQ, "es", StringComparison.OrdinalIgnoreCase))
+    {
+        code = "es-US";
+    }
+    else if (string.Equals(langQ, "en", StringComparison.OrdinalIgnoreCase))
+    {
+        code = "en-US";
+    }
+
     var culture = CultureInfo.GetCultureInfo(code);
     CultureInfo.CurrentCulture = culture;
     CultureInfo.CurrentUICulture = culture;

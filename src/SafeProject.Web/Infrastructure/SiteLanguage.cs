@@ -6,8 +6,21 @@ public sealed class SiteLanguage
 
     public SiteLanguage(IHttpContextAccessor accessor)
     {
-        var value = accessor.HttpContext?.Request.Cookies[CookieName];
-        IsSpanish = string.Equals(value, "es", StringComparison.OrdinalIgnoreCase);
+        var request = accessor.HttpContext?.Request;
+        var langQ = request?.Query["lang"].FirstOrDefault();
+        if (string.Equals(langQ, "es", StringComparison.OrdinalIgnoreCase))
+        {
+            IsSpanish = true;
+        }
+        else if (string.Equals(langQ, "en", StringComparison.OrdinalIgnoreCase))
+        {
+            IsSpanish = false;
+        }
+        else
+        {
+            var value = request?.Cookies[CookieName];
+            IsSpanish = string.Equals(value, "es", StringComparison.OrdinalIgnoreCase);
+        }
     }
 
     public bool IsSpanish { get; }

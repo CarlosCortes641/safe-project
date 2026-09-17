@@ -7,12 +7,22 @@ namespace SafeProject.Web.Controllers;
 
 public class SeoController : Controller
 {
-    private static readonly (string Path, string Priority, string ChangeFreq)[] PublicUrls =
-    [
-        ("/", "1.0", "weekly"),
-        ("/water-heaters", "0.9", "weekly"),
-        ("/realtor", "0.7", "monthly")
-    ];
+    private static IEnumerable<(string Path, string Priority, string ChangeFreq)> PublicUrls()
+    {
+        yield return ("/", "1.0", "weekly");
+        yield return ("/water-heaters", "0.9", "weekly");
+        yield return ("/hvac-installation-charlotte", "0.85", "monthly");
+        yield return ("/tankless-water-heater-charlotte", "0.85", "monthly");
+        yield return ("/faq", "0.8", "monthly");
+        yield return ("/about", "0.7", "monthly");
+        yield return ("/realtor", "0.7", "monthly");
+        yield return ("/guides/water-heater-cost-charlotte", "0.75", "monthly");
+        yield return ("/guides/hvac-replacement-charlotte", "0.75", "monthly");
+        foreach (var city in SeoContent.Cities)
+        {
+            yield return ($"/areas/{city.Slug}", "0.8", "monthly");
+        }
+    }
 
     [HttpGet("/sitemap.xml")]
     [ResponseCache(Duration = 3600, Location = ResponseCacheLocation.Any)]
@@ -23,18 +33,22 @@ public class SeoController : Controller
         var xml = new StringBuilder();
         xml.AppendLine("""<?xml version="1.0" encoding="UTF-8"?>""");
         xml.AppendLine("""<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">""");
-        foreach (var (path, priority, changeFreq) in PublicUrls)
+        foreach (var (path, priority, changeFreq) in PublicUrls())
         {
             var loc = path == "/" ? baseUrl + "/" : baseUrl + path;
+            var en = path == "/" ? baseUrl + "/?lang=en" : baseUrl + path + "?lang=en";
+            var es = path == "/" ? baseUrl + "/?lang=es" : baseUrl + path + "?lang=es";
             var safeLoc = System.Security.SecurityElement.Escape(loc);
+            var safeEn = System.Security.SecurityElement.Escape(en);
+            var safeEs = System.Security.SecurityElement.Escape(es);
             xml.AppendLine("  <url>");
             xml.AppendLine($"    <loc>{safeLoc}</loc>");
             xml.AppendLine($"    <lastmod>{lastmod}</lastmod>");
             xml.AppendLine($"    <changefreq>{changeFreq}</changefreq>");
             xml.AppendLine($"    <priority>{priority}</priority>");
-            xml.AppendLine($"    <xhtml:link rel=\"alternate\" hreflang=\"en\" href=\"{safeLoc}\" />");
-            xml.AppendLine($"    <xhtml:link rel=\"alternate\" hreflang=\"es\" href=\"{safeLoc}\" />");
-            xml.AppendLine($"    <xhtml:link rel=\"alternate\" hreflang=\"x-default\" href=\"{safeLoc}\" />");
+            xml.AppendLine($"    <xhtml:link rel=\"alternate\" hreflang=\"en\" href=\"{safeEn}\" />");
+            xml.AppendLine($"    <xhtml:link rel=\"alternate\" hreflang=\"es\" href=\"{safeEs}\" />");
+            xml.AppendLine($"    <xhtml:link rel=\"alternate\" hreflang=\"x-default\" href=\"{safeEn}\" />");
             xml.AppendLine("  </url>");
         }
 
@@ -69,6 +83,9 @@ public class SeoController : Controller
     public IActionResult Llms()
     {
         var baseUrl = PublicUrl.Base(Request);
+        var cityLines = string.Join(
+            "\n",
+            SeoContent.Cities.Select(c => $"- [{c.NameEn}, {c.State}]({baseUrl}/areas/{c.Slug})"));
         var body =
             $"""
              # Safe Project Solution
@@ -81,25 +98,35 @@ public class SeoController : Controller
 
              ## Core pages
 
-             - [Home — HVAC & water heaters overview]({baseUrl}/): Local SEO landing for Charlotte HVAC and water heater installation, payment paths, FAQ, and contact CTAs.
-             - [Water heater installation]({baseUrl}/water-heaters): Electric, gas, and tankless matching, published installed prices, online price builder, and standard scope.
-             - [Realtor / closing support]({baseUrl}/realtor): Specialist visit request for Realtors, sellers, buyers, investors, and lenders.
+             - [Home]({baseUrl}/): Charlotte HVAC and water heater landing, payment paths, FAQ, contact CTAs.
+             - [Water heaters]({baseUrl}/water-heaters): Matching, installed prices, builder.
+             - [HVAC installation Charlotte]({baseUrl}/hvac-installation-charlotte)
+             - [Tankless Charlotte]({baseUrl}/tankless-water-heater-charlotte)
+             - [FAQ]({baseUrl}/faq)
+             - [About]({baseUrl}/about)
+             - [Realtor support]({baseUrl}/realtor)
+
+             ## Guides
+
+             - [Water heater cost Charlotte]({baseUrl}/guides/water-heater-cost-charlotte)
+             - [HVAC replacement Charlotte]({baseUrl}/guides/hvac-replacement-charlotte)
+
+             ## Cities served
+
+             {cityLines}
 
              ## Structured data & crawl aids
 
              - [Sitemap]({baseUrl}/sitemap.xml)
              - [robots.txt]({baseUrl}/robots.txt)
-             - [Product catalog JSON]({baseUrl}/catalog.json): Machine-readable offer list (sandbox; not for direct checkout).
-
-             ## Service area
-
-             Charlotte, NC metro and communities approximately one hour away, including nearby cities in North Carolina and Rock Hill, SC area coverage intent.
+             - [Open Graph image]({baseUrl}/img/og-default.png)
+             - [Product catalog JSON]({baseUrl}/catalog.json)
 
              ## Notes for assistants
 
              - Website is a sandbox: no live payments, no live Safe 24 product, no payment-at-closing approval.
-             - Prefer linking customers to /water-heaters for water heater pricing and /#hvac for HVAC quick quote.
-             - Bilingual English / Español via on-site language toggle.
+             - Prefer /water-heaters for water heater pricing and /#hvac or /hvac-installation-charlotte for HVAC.
+             - Bilingual English / Español via ?lang=en or ?lang=es.
              """;
         return Content(body, "text/plain", Encoding.UTF8);
     }

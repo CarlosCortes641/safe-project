@@ -1,0 +1,61 @@
+@model SafeProject.Web.Infrastructure.SeoContent.CityPage
+@{
+    var city = Lang.T(Model.NameEn, Model.NameEs);
+    var county = Lang.T(Model.CountyEn, Model.CountyEs);
+    ViewData["Title"] = Lang.T(
+        $"HVAC & Water Heater Installation {Model.NameEn}, {Model.State} | Safe Project Solution",
+        $"Instalación HVAC y Water Heaters {Model.NameEs}, {Model.State} | Safe Project Solution");
+    ViewData["MetaDescription"] = Lang.T(
+        $"Safe Project Solution installs and replaces HVAC systems and water heaters for {Model.NameEn}, {Model.State} ({Model.CountyEn}) with published installed prices from Charlotte crews.",
+        $"Safe Project Solution instala y reemplaza HVAC y water heaters en {Model.NameEs}, {Model.State} ({Model.CountyEs}) con precios instalados publicados desde Charlotte.");
+    var siteUrl = PublicUrl.Base(Context.Request);
+    var pageUrl = siteUrl + "/areas/" + Model.Slug;
+    var breadcrumb = System.Text.Json.JsonSerializer.Serialize(new Dictionary<string, object?>
+    {
+        ["@context"] = "https://schema.org",
+        ["@type"] = "BreadcrumbList",
+        ["itemListElement"] = new object[]
+        {
+            new Dictionary<string, object?> { ["@type"] = "ListItem", ["position"] = 1, ["name"] = "Home", ["item"] = siteUrl + "/" },
+            new Dictionary<string, object?> { ["@type"] = "ListItem", ["position"] = 2, ["name"] = city, ["item"] = pageUrl }
+        }
+    });
+}
+<main id="main-content" class="seoPage pad">
+    <p class="seoEyebrow">@city · @Model.State · @county</p>
+    <h1>@Lang.T($"HVAC & water heater installation in {Model.NameEn}", $"Instalación de HVAC y water heaters en {Model.NameEs}")</h1>
+    <p class="lead">@Lang.T(
+        $"Charlotte-based Safe crews serve {Model.NameEn} homeowners with published water heater and HVAC starting prices, clear scope, and bilingual support.",
+        $"Los equipos de Safe con base en Charlotte sirven a propietarios en {Model.NameEs} con precios iniciales publicados de water heaters y HVAC, alcance claro y apoyo bilingüe.")</p>
+
+    <div class="seoAside">
+        <strong>@Lang.T("Start with published pricing", "Empieza con precios publicados")</strong>
+        <p>@Lang.T("Water heaters from $1,750 installed (standard scope). HVAC complete systems from published tonnage bands.", "Water heaters desde $1,750 instalados (alcance estándar). Sistemas HVAC completos según bandas de tonelaje publicadas.")</p>
+        <a class="primary" href="/water-heaters">@Lang.T("Build water heater price", "Armar precio de water heater") →</a>
+        <a class="outline" href="/#hvac">@Lang.T("HVAC quick quote", "Cotización rápida HVAC") →</a>
+        <a class="outline" href="tel:@CatalogStore.PhoneTel">@Lang.T("Call", "Llamar") @CatalogStore.PhoneDisplay</a>
+    </div>
+
+    <div class="seoProse">
+        <h2>@Lang.T("Why local pages matter", "Por qué importa lo local")</h2>
+        <p>@Lang.T(
+            $"{Model.NameEn} customers get the same Charlotte process: confirm equipment, disclose non-standard work, choose payment path, then schedule.",
+            $"Los clientes en {Model.NameEs} siguen el mismo proceso de Charlotte: confirmar equipo, divulgar trabajo no estándar, elegir pago y agendar.")</p>
+        <h2>@Lang.T("What we install", "Qué instalamos")</h2>
+        <ul>
+            <li>@Lang.T("Electric, gas, and tankless water heaters", "Water heaters eléctricos, de gas y tankless")</li>
+            <li>@Lang.T("Complete AC + heat replacement (ductwork separate)", "Reemplazo completo de AC + calefacción (ductwork aparte)")</li>
+            <li>@Lang.T("Maintenance, evaluation, and Realtor support", "Mantenimiento, evaluación y apoyo a Realtors")</li>
+        </ul>
+        <h2>@Lang.T("Nearby coverage", "Cobertura cercana")</h2>
+        <p class="seoCityLinks">
+            @foreach (var c in SafeProject.Web.Infrastructure.SeoContent.Cities.Where(x => x.Slug != Model.Slug))
+            {
+                <a href="/areas/@c.Slug">@Lang.T(c.NameEn, c.NameEs)</a>
+            }
+        </p>
+    </div>
+</main>
+<script type="application/ld+json">
+@Html.Raw(breadcrumb)
+</script>

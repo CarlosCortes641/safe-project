@@ -1,0 +1,30 @@
+@using SafeProject.Web.Infrastructure
+@{
+    ViewData["Title"] = Lang.T(
+        "FAQ | HVAC & Water Heater Installation Charlotte",
+        "FAQ | Instalación HVAC y Water Heaters Charlotte");
+    ViewData["MetaDescription"] = Lang.T(
+        "Straight answers about Safe Project Solution prices, Synchrony, Safe 24, warranties, service area, and scheduling in Charlotte, NC.",
+        "Respuestas directas sobre precios de Safe Project Solution, Synchrony, Safe 24, garantías, área de servicio y agenda en Charlotte, NC.");
+}
+<main id="main-content" class="seoPage pad">
+    <p class="seoEyebrow">@Lang.T("STRAIGHT ANSWERS", "RESPUESTAS DIRECTAS")</p>
+    <h1>@Lang.T("Charlotte HVAC & water heater FAQ", "FAQ de HVAC y water heaters en Charlotte")</h1>
+    <p class="lead">@Lang.T("Clear answers before you choose a payment path or schedule installation.", "Respuestas claras antes de elegir pago o agendar instalación.")</p>
+
+    <section class="faq" id="faq">
+        @foreach (var item in SeoContent.Faqs)
+        {
+            <details>
+                <summary>@Lang.T(item.EnQ, item.EsQ)</summary>
+                <p>@Lang.T(item.EnA, item.EsA)</p>
+            </details>
+        }
+        @await Html.PartialAsync("_FaqJsonLd")
+    </section>
+
+    <div class="buttons">
+        <a class="primary" href="tel:@CatalogStore.PhoneTel">@Lang.T("Call us", "Llámanos") @CatalogStore.PhoneDisplay</a>
+        <a class="outline" href="/water-heaters">@Lang.T("Water heater prices", "Precios de water heaters") →</a>
+    </div>
+</main>

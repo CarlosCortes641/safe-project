@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = Lang.T(
+        "About Safe Project Solution | Charlotte HVAC & Water Heaters",
+        "Acerca de Safe Project Solution | HVAC y Water Heaters Charlotte");
+    ViewData["MetaDescription"] = Lang.T(
+        "Safe Project Solution by Safe HVAC Solution LLC serves Charlotte and nearby communities with published HVAC and water heater installed prices. Powered by Home Indor Technology Inc.",
+        "Safe Project Solution por Safe HVAC Solution LLC sirve Charlotte y comunidades cercanas con precios instalados de HVAC y water heaters. Powered by Home Indor Technology Inc.");
+}
+<main id="main-content" class="seoPage pad">
+    <p class="seoEyebrow">@Lang.T("COMPANY", "EMPRESA")</p>
+    <h1>@Lang.T("About Safe Project Solution", "Acerca de Safe Project Solution")</h1>
+    <p class="lead">@Lang.T("Safe Project Solution is the public project brand of Safe HVAC Solution LLC for HVAC and water heater installation in Charlotte, North Carolina.", "Safe Project Solution es la marca pública de Safe HVAC Solution LLC para instalación de HVAC y water heaters en Charlotte, North Carolina.")</p>
+
+    <div class="seoProse">
+        <h2>@Lang.T("Who we are", "Quiénes somos")</h2>
+        <p>@Lang.T("Safe HVAC Solution LLC is a licensed general contracting company focused on the mechanical systems homeowners need most: air conditioning, heating, and water heaters. Technology partner: Home Indor Technology Inc.", "Safe HVAC Solution LLC es un general contractor con licencia enfocado en los sistemas mecánicos esenciales: aire acondicionado, calefacción y water heaters. Socio tecnológico: Home Indor Technology Inc.")</p>
+
+        <h2>@Lang.T("How we work", "Cómo trabajamos")</h2>
+        <ol>
+            <li>@Lang.T("See a published starting price.", "Ver un precio inicial publicado.")</li>
+            <li>@Lang.T("Confirm standard scope and site conditions.", "Confirmar alcance estándar y condiciones del sitio.")</li>
+            <li>@Lang.T("Choose cash, Synchrony, or Safe 24 review path.", "Elegir pago completo, Synchrony o ruta Safe 24.")</li>
+            <li>@Lang.T("Schedule installation when capacity is available.", "Agendar instalación cuando haya capacidad.")</li>
+        </ol>
+
+        <h2>@Lang.T("Contact", "Contacto")</h2>
+        <p>
+            @Lang.T("Call", "Llamar"): <a href="tel:@CatalogStore.PhoneTel">@CatalogStore.PhoneDisplay</a><br />
+            @Lang.T("Text", "Texto"): <a href="sms:@CatalogStore.TextTel">@CatalogStore.TextShort</a><br />
+            Email: <a href="mailto:@CatalogStore.Email">@CatalogStore.Email</a><br />
+            @Lang.T("Service area: Charlotte, NC + about one hour around.", "Área de servicio: Charlotte, NC + aproximadamente una hora alrededor.")
+        </p>
+    </div>
+
+    <div class="buttons">
+        <a class="primary" href="/#check">@Lang.T("Start here", "Empieza aquí") →</a>
+        <a class="outline" href="/water-heaters">Water heaters →</a>
+        <a class="outline" href="/faq">FAQ →</a>
+    </div>
+</main>

@@ -228,12 +228,20 @@
         <div class="heading">
             <p>@Lang.T("STRAIGHT ANSWERS", "RESPUESTAS DIRECTAS")</p>
             <h2>@Lang.T("Before you choose.", "Antes de elegir.")</h2>
+            <div>@Lang.T("Common questions about price, financing paths, warranties, and scheduling.", "Preguntas comunes sobre precio, financiamiento, garantías y agenda.")</div>
         </div>
-        <details open><summary>@Lang.T("Is the displayed price final?", "¿El precio mostrado es final?")</summary><p>@Lang.T("It covers the published standard scope. Safe confirms site conditions and discloses non-standard work before authorization.", "Cubre el alcance estándar publicado. Safe confirma condiciones del sitio y divulga trabajo no estándar antes de autorizar.")</p></details>
-        <details><summary>@Lang.T("Is $0 down with Synchrony guaranteed?", "¿$0 inicial con Synchrony está garantizado?")</summary><p>@Lang.T("No. It may be available for approved applicants. Synchrony determines the promotion, APR, term, and payment.", "No. Puede estar disponible para solicitantes aprobados. Synchrony determina promoción, APR, plazo y pago.")</p></details>
-        <details><summary>@Lang.T("Is Safe 24 the same as Synchrony?", "¿Safe 24 es lo mismo que Synchrony?")</summary><p>@Lang.T("No. Safe 24 is the company eligibility path with a $100 initial payment; Synchrony is a separate third-party credit application.", "No. Safe 24 es la ruta de elegibilidad de la compañía con $100 inicial; Synchrony es una solicitud de crédito de terceros.")</p></details>
-        <details><summary>@Lang.T("Does this reserve an appointment?", "¿Esto reserva una cita?")</summary><p>@Lang.T("No. Safe first confirms scope, price, and availability.", "No. Safe primero confirma alcance, precio y disponibilidad.")</p></details>
+        @foreach (var item in SafeProject.Web.Infrastructure.SeoContent.Faqs.Take(6))
+        {
+            <details>
+                <summary>@Lang.T(item.EnQ, item.EsQ)</summary>
+                <p>@Lang.T(item.EnA, item.EsA)</p>
+            </details>
+        }
+        <div class="buttons" style="margin-top:1.25rem">
+            <a class="outline" href="/faq">@Lang.T("See all FAQs", "Ver todas las FAQ") →</a>
+        </div>
         @await Html.PartialAsync("_FaqJsonLd")
+        @await Html.PartialAsync("_HowToJsonLd")
     </section>
 
     @await Html.PartialAsync("_ContactCtas")

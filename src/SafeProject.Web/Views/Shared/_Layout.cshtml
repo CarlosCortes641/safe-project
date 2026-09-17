@@ -11,6 +11,9 @@
     var baseUrl = PublicUrl.Base(Context.Request);
     var path = string.IsNullOrEmpty(Context.Request.Path.Value) ? "/" : Context.Request.Path.Value!;
     var canonical = path == "/" ? baseUrl + "/" : baseUrl + path;
+    var enUrl = path == "/" ? baseUrl + "/?lang=en" : baseUrl + path + "?lang=en";
+    var esUrl = path == "/" ? baseUrl + "/?lang=es" : baseUrl + path + "?lang=es";
+    var ogImage = baseUrl + "/img/og-default.png";
     var locale = Lang.IsSpanish ? "es_US" : "en_US";
     var localeAlt = Lang.IsSpanish ? "en_US" : "es_US";
 }
@@ -28,9 +31,9 @@
     <meta name="geo.position" content="35.2271;-80.8431" />
     <meta name="ICBM" content="35.2271, -80.8431" />
     <link rel="canonical" href="@canonical" />
-    <link rel="alternate" hreflang="en" href="@canonical" />
-    <link rel="alternate" hreflang="es" href="@canonical" />
-    <link rel="alternate" hreflang="x-default" href="@canonical" />
+    <link rel="alternate" hreflang="en" href="@enUrl" />
+    <link rel="alternate" hreflang="es" href="@esUrl" />
+    <link rel="alternate" hreflang="x-default" href="@enUrl" />
     <link rel="sitemap" type="application/xml" title="Sitemap" href="@baseUrl/sitemap.xml" />
     <meta property="og:type" content="@ogType" />
     <meta property="og:site_name" content="Safe Project Solution" />
@@ -39,9 +42,14 @@
     <meta property="og:title" content="@title" />
     <meta property="og:description" content="@description" />
     <meta property="og:url" content="@canonical" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="@ogImage" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Safe Project Solution — HVAC & Water Heaters in Charlotte, NC" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="@title" />
     <meta name="twitter:description" content="@description" />
+    <meta name="twitter:image" content="@ogImage" />
     <meta name="theme-color" content="#0c4774" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -64,7 +72,7 @@
             <a href="/#plans">@Lang.T("Payment", "Pago")</a>
             <a href="/ops">@Lang.T("Ops", "Ops")</a>
         </nav>
-        <a class="lang" href="@Url.Action("Set", "Language", new { code = Lang.OtherCode, returnUrl })" aria-label="@Lang.T("Switch to Spanish", "Cambiar a inglés")">@Lang.ToggleLabel</a>
+        <a class="lang" href="@(path == "/" ? "/?lang=" : path + "?lang=")@Lang.OtherCode" aria-label="@Lang.T("Switch to Spanish", "Cambiar a inglés")">@Lang.ToggleLabel</a>
         <a class="phone" href="tel:@CatalogStore.PhoneTel" aria-label="@Lang.T("Call Safe", "Llamar a Safe") @CatalogStore.PhoneDisplay">@CatalogStore.PhoneDisplay</a>
     </header>
     @RenderBody()
@@ -84,10 +92,12 @@
                     <p>@Lang.T("Explore", "Explorar")</p>
                     <a href="/#check">@Lang.T("Start here", "Empieza aquí")</a>
                     <a href="/water-heaters">Water heaters</a>
-                    <a href="/#hvac">HVAC</a>
+                    <a href="/hvac-installation-charlotte">HVAC</a>
+                    <a href="/tankless-water-heater-charlotte">Tankless</a>
                     <a href="/#plans">@Lang.T("Payment", "Pago")</a>
                     <a href="/realtor">Realtors</a>
-                    <a href="/#faq">FAQ</a>
+                    <a href="/faq">FAQ</a>
+                    <a href="/about">@Lang.T("About", "Nosotros")</a>
                 </div>
                 <div>
                     <p>@Lang.T("Contact", "Contacto")</p>
@@ -96,9 +106,13 @@
                     <a href="mailto:@CatalogStore.Email">Email</a>
                 </div>
                 <div>
-                    <p>@Lang.T("Company", "Empresa")</p>
-                    <a href="/ops">@Lang.T("Internal board", "Tablero interno")</a>
-                    <a href="/catalog.json">catalog.json</a>
+                    <p>@Lang.T("Areas & guides", "Áreas y guías")</p>
+                    @foreach (var city in SafeProject.Web.Infrastructure.SeoContent.Cities.Take(4))
+                    {
+                        <a href="/areas/@city.Slug">@Lang.T(city.NameEn, city.NameEs)</a>
+                    }
+                    <a href="/guides/water-heater-cost-charlotte">@Lang.T("WH cost guide", "Guía costo WH")</a>
+                    <a href="/guides/hvac-replacement-charlotte">@Lang.T("HVAC guide", "Guía HVAC")</a>
                     <a href="/sitemap.xml">sitemap.xml</a>
                     <a href="/llms.txt">llms.txt</a>
                 </div>

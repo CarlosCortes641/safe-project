@@ -1,0 +1,50 @@
+@{
+    var siteUrl = PublicUrl.Base(Context.Request);
+    var doc = new Dictionary<string, object?>
+    {
+        ["@context"] = "https://schema.org",
+        ["@type"] = "HowTo",
+        ["name"] = Lang.T("Get a Safe Project Solution quote in Charlotte", "Obtén una cotización Safe Project Solution en Charlotte"),
+        ["description"] = Lang.T("See published price, confirm scope, choose payment path, then book installation.", "Ve el precio publicado, confirma alcance, elige pago y agenda la instalación."),
+        ["totalTime"] = "PT20M",
+        ["step"] = new object[]
+        {
+            new Dictionary<string, object?>
+            {
+                ["@type"] = "HowToStep",
+                ["position"] = 1,
+                ["name"] = Lang.T("See price", "Ver precio"),
+                ["text"] = Lang.T("Open HVAC questions or the water heater builder to see a published starting installed price.", "Abre las preguntas HVAC o el constructor de water heaters para ver un precio instalado inicial publicado."),
+                ["url"] = siteUrl + "/#hvac"
+            },
+            new Dictionary<string, object?>
+            {
+                ["@type"] = "HowToStep",
+                ["position"] = 2,
+                ["name"] = Lang.T("Confirm scope", "Confirmar alcance"),
+                ["text"] = Lang.T("Safe confirms site conditions and discloses non-standard work before authorization.", "Safe confirma condiciones del sitio y divulga trabajo no estándar antes de autorizar."),
+                ["url"] = siteUrl + "/#check"
+            },
+            new Dictionary<string, object?>
+            {
+                ["@type"] = "HowToStep",
+                ["position"] = 3,
+                ["name"] = Lang.T("Choose payment", "Elegir pago"),
+                ["text"] = Lang.T("Compare cash, Synchrony, and Safe 24 eligibility paths.", "Compara pago completo, Synchrony y rutas de elegibilidad Safe 24."),
+                ["url"] = siteUrl + "/#plans"
+            },
+            new Dictionary<string, object?>
+            {
+                ["@type"] = "HowToStep",
+                ["position"] = 4,
+                ["name"] = Lang.T("Book install", "Agendar instalación"),
+                ["text"] = Lang.T("Schedule when capacity is available after scope and payment path are confirmed.", "Agenda cuando haya capacidad después de confirmar alcance y ruta de pago."),
+                ["url"] = siteUrl + "/#check"
+            }
+        }
+    };
+    var json = System.Text.Json.JsonSerializer.Serialize(doc);
+}
+<script type="application/ld+json">
+@Html.Raw(json)
+</script>
