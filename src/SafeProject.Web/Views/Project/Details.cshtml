@@ -1,6 +1,7 @@
 @model ProjectRecord
 @{
     ViewData["Title"] = Model.Id;
+    ViewData["Robots"] = "noindex, nofollow";
 }
 @await Html.PartialAsync("_SandboxBanner")
 <section class="pad journey">

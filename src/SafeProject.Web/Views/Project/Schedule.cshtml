@@ -1,6 +1,7 @@
 @model ProjectRecord
 @{
     ViewData["Title"] = Lang.T("Schedule", "Agenda");
+    ViewData["Robots"] = "noindex, nofollow";
     var days = ViewBag.Days as IReadOnlyList<DayCapacity> ?? [];
     var error = ViewBag.Error as string;
 }

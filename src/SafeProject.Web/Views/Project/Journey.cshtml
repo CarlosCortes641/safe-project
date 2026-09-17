@@ -15,6 +15,7 @@
         Lang.T("Confirmation", "Confirmación")
     };
     ViewData["Title"] = labels[step];
+    ViewData["Robots"] = "noindex, nofollow";
 }
 @await Html.PartialAsync("_SandboxBanner")
 <section class="journey pad" id="checkout">

@@ -1,6 +1,7 @@
 @model OpsDashboardViewModel
 @{
     ViewData["Title"] = Lang.T("Internal board", "Tablero interno");
+    ViewData["Robots"] = "noindex, nofollow";
 }
 @await Html.PartialAsync("_SandboxBanner")
 <section class="ops pad">

@@ -1,0 +1,41 @@
+@{
+    var faqs = new (string Q, string A)[]
+    {
+        (
+            Lang.T("Is the displayed price final?", "¿El precio mostrado es final?"),
+            Lang.T("It covers the published standard scope. Safe confirms site conditions and discloses non-standard work before authorization.", "Cubre el alcance estándar publicado. Safe confirma condiciones del sitio y divulga trabajo no estándar antes de autorizar.")
+        ),
+        (
+            Lang.T("Is $0 down with Synchrony guaranteed?", "¿$0 inicial con Synchrony está garantizado?"),
+            Lang.T("No. It may be available for approved applicants. Synchrony determines the promotion, APR, term, and payment.", "No. Puede estar disponible para solicitantes aprobados. Synchrony determina promoción, APR, plazo y pago.")
+        ),
+        (
+            Lang.T("Is Safe 24 the same as Synchrony?", "¿Safe 24 es lo mismo que Synchrony?"),
+            Lang.T("No. Safe 24 is the company eligibility path with a $100 initial payment; Synchrony is a separate third-party credit application.", "No. Safe 24 es la ruta de elegibilidad de la compañía con $100 inicial; Synchrony es una solicitud de crédito de terceros.")
+        ),
+        (
+            Lang.T("Does this reserve an appointment?", "¿Esto reserva una cita?"),
+            Lang.T("No. Safe first confirms scope, price, and availability.", "No. Safe primero confirma alcance, precio y disponibilidad.")
+        )
+    };
+    var entities = faqs.Select(f => new Dictionary<string, object?>
+    {
+        ["@type"] = "Question",
+        ["name"] = f.Q,
+        ["acceptedAnswer"] = new Dictionary<string, object?>
+        {
+            ["@type"] = "Answer",
+            ["text"] = f.A
+        }
+    }).ToList();
+    var doc = new Dictionary<string, object?>
+    {
+        ["@context"] = "https://schema.org",
+        ["@type"] = "FAQPage",
+        ["mainEntity"] = entities
+    };
+    var json = System.Text.Json.JsonSerializer.Serialize(doc);
+}
+<script type="application/ld+json">
+@Html.Raw(json)
+</script>

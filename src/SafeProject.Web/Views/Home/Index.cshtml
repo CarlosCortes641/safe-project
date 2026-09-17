@@ -233,6 +233,7 @@
         <details><summary>@Lang.T("Is $0 down with Synchrony guaranteed?", "¿$0 inicial con Synchrony está garantizado?")</summary><p>@Lang.T("No. It may be available for approved applicants. Synchrony determines the promotion, APR, term, and payment.", "No. Puede estar disponible para solicitantes aprobados. Synchrony determina promoción, APR, plazo y pago.")</p></details>
         <details><summary>@Lang.T("Is Safe 24 the same as Synchrony?", "¿Safe 24 es lo mismo que Synchrony?")</summary><p>@Lang.T("No. Safe 24 is the company eligibility path with a $100 initial payment; Synchrony is a separate third-party credit application.", "No. Safe 24 es la ruta de elegibilidad de la compañía con $100 inicial; Synchrony es una solicitud de crédito de terceros.")</p></details>
         <details><summary>@Lang.T("Does this reserve an appointment?", "¿Esto reserva una cita?")</summary><p>@Lang.T("No. Safe first confirms scope, price, and availability.", "No. Safe primero confirma alcance, precio y disponibilidad.")</p></details>
+        @await Html.PartialAsync("_FaqJsonLd")
     </section>
 
     @await Html.PartialAsync("_ContactCtas")

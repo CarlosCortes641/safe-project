@@ -7,8 +7,31 @@
     ViewData["MetaDescription"] = Lang.T(
         "Published installed prices for electric, gas, and tankless water heater installation and replacement in Charlotte, NC. Compare cash, Synchrony, and Safe 24.",
         "Precios instalados de water heaters eléctricos, de gas y tankless en Charlotte, NC. Compara pago completo, Synchrony y Safe 24.");
+    ViewData["OgType"] = "website";
     var siteUrl = PublicUrl.Base(Context.Request);
     var serviceJsonLd = Catalog.ToWaterHeaterPageJsonLd(siteUrl);
+    var breadcrumb = System.Text.Json.JsonSerializer.Serialize(new Dictionary<string, object?>
+    {
+        ["@context"] = "https://schema.org",
+        ["@type"] = "BreadcrumbList",
+        ["itemListElement"] = new object[]
+        {
+            new Dictionary<string, object?>
+            {
+                ["@type"] = "ListItem",
+                ["position"] = 1,
+                ["name"] = "Home",
+                ["item"] = siteUrl + "/"
+            },
+            new Dictionary<string, object?>
+            {
+                ["@type"] = "ListItem",
+                ["position"] = 2,
+                ["name"] = "Water heaters",
+                ["item"] = siteUrl + "/water-heaters"
+            }
+        }
+    });
 }
 <main id="main-content">
     @await Html.PartialAsync("_SandboxBanner")
@@ -67,4 +90,7 @@
 </main>
 <script type="application/ld+json">
 @Html.Raw(serviceJsonLd)
+</script>
+<script type="application/ld+json">
+@Html.Raw(breadcrumb)
 </script>

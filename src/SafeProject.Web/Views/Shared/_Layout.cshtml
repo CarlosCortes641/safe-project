@@ -5,8 +5,14 @@
     var description = ViewData["MetaDescription"] as string ?? Lang.T(
         "Published installed prices for water heaters and HVAC replacement in Charlotte. Compare cash, Synchrony and Safe 24.",
         "Precios instalados de water heaters y reemplazo HVAC en Charlotte. Compara pago completo, Synchrony y Safe 24.");
+    var robots = ViewData["Robots"] as string ?? "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+    var ogType = ViewData["OgType"] as string ?? "website";
     var returnUrl = Context.Request.Path + Context.Request.QueryString;
-    var canonical = PublicUrl.Base(Context.Request) + Context.Request.Path.Value;
+    var baseUrl = PublicUrl.Base(Context.Request);
+    var path = string.IsNullOrEmpty(Context.Request.Path.Value) ? "/" : Context.Request.Path.Value!;
+    var canonical = path == "/" ? baseUrl + "/" : baseUrl + path;
+    var locale = Lang.IsSpanish ? "es_US" : "en_US";
+    var localeAlt = Lang.IsSpanish ? "en_US" : "es_US";
 }
 <!DOCTYPE html>
 <html lang="@Lang.HtmlLang">
@@ -15,7 +21,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@title</title>
     <meta name="description" content="@description" />
+    <meta name="robots" content="@robots" />
+    <meta name="author" content="Safe HVAC Solution LLC" />
+    <meta name="geo.region" content="US-NC" />
+    <meta name="geo.placename" content="Charlotte" />
+    <meta name="geo.position" content="35.2271;-80.8431" />
+    <meta name="ICBM" content="35.2271, -80.8431" />
     <link rel="canonical" href="@canonical" />
+    <link rel="alternate" hreflang="en" href="@canonical" />
+    <link rel="alternate" hreflang="es" href="@canonical" />
+    <link rel="alternate" hreflang="x-default" href="@canonical" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="@baseUrl/sitemap.xml" />
+    <meta property="og:type" content="@ogType" />
+    <meta property="og:site_name" content="Safe Project Solution" />
+    <meta property="og:locale" content="@locale" />
+    <meta property="og:locale:alternate" content="@localeAlt" />
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="@description" />
+    <meta property="og:url" content="@canonical" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="@title" />
+    <meta name="twitter:description" content="@description" />
+    <meta name="theme-color" content="#0c4774" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
@@ -60,6 +87,7 @@
                     <a href="/#hvac">HVAC</a>
                     <a href="/#plans">@Lang.T("Payment", "Pago")</a>
                     <a href="/realtor">Realtors</a>
+                    <a href="/#faq">FAQ</a>
                 </div>
                 <div>
                     <p>@Lang.T("Contact", "Contacto")</p>
@@ -71,6 +99,8 @@
                     <p>@Lang.T("Company", "Empresa")</p>
                     <a href="/ops">@Lang.T("Internal board", "Tablero interno")</a>
                     <a href="/catalog.json">catalog.json</a>
+                    <a href="/sitemap.xml">sitemap.xml</a>
+                    <a href="/llms.txt">llms.txt</a>
                 </div>
             </div>
         </div>

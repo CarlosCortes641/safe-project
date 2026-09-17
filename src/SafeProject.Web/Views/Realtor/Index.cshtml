@@ -1,6 +1,11 @@
 @model RealtorFormRequest
 @{
-    ViewData["Title"] = Lang.T("Realtor request", "Solicitud Realtor");
+    ViewData["Title"] = Lang.T(
+        "Realtor HVAC & Water Heater Support Charlotte | Safe Project Solution",
+        "Apoyo Realtor HVAC y Water Heaters Charlotte | Safe Project Solution");
+    ViewData["MetaDescription"] = Lang.T(
+        "Request specialist HVAC and water heater support for Charlotte real estate transactions — inspection findings, repairs, and closing coordination.",
+        "Solicita apoyo especializado de HVAC y water heaters para transacciones en Charlotte — inspección, reparaciones y coordinación de cierre.");
     var days = ViewBag.Days as IReadOnlyList<DayCapacity> ?? [];
 }
 @await Html.PartialAsync("_SandboxBanner")
