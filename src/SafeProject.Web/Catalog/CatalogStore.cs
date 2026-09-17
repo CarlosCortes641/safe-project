@@ -29,9 +29,9 @@ public sealed class CatalogStore
     public const string PhoneTel = "+17048396126";
     public const string PhoneSchema = "+1-704-839-6126";
     public const string PhonePlain = "704-839-6126";
-    public const string TextDisplay = "+1 (704) 839-6126";
-    public const string TextTel = "+17048396126";
-    public const string TextShort = "704-839-6126";
+    public const string TextDisplay = "+1 (650) 669-6890";
+    public const string TextTel = "+16506696890";
+    public const string TextShort = "650-669-6890";
     public const string Email = "safehvacsolution@gmail.com";
     public const string BrandName = "Safe Project Solution";
     public const string LegalName = "Safe HVAC Solution LLC";

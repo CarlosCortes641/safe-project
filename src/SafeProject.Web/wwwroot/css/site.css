@@ -195,25 +195,61 @@ box-shadow:
 .heroCall:hover strong{
 color:#fff}
 @media (prefers-reduced-motion:reduce){
-.heroCall::after{
+.heroCall::after,
+.heroText::after{
 animation:none;
 opacity:0}
 }
 .heroText{
 background:#fff;
 color:var(--b);
-border:1px solid #8fa5b1}
+border:1px solid #8fa5b1;
+border-radius:18px;
+position:relative;
+z-index:1;
+overflow:hidden;
+box-shadow:
+  0 0 22px rgba(201,71,19,.28),
+  0 0 44px rgba(255,150,80,.18),
+  0 8px 18px rgba(16,34,52,.08)}
+.heroText::after{
+content:"";
+position:absolute;
+top:-40%;
+left:-45%;
+width:38%;
+height:180%;
+background:linear-gradient(
+  90deg,
+  transparent 0%,
+  rgba(255,210,170,0) 35%,
+  rgba(255,210,170,.28) 50%,
+  rgba(255,210,170,0) 65%,
+  transparent 100%);
+transform:translateX(0) skewX(-24deg);
+pointer-events:none;
+animation:heroCallShine 2.8s ease-in-out infinite;
+animation-delay:.9s}
 .heroText span{
-color:var(--o)}
+color:var(--o);
+position:relative;
+z-index:1}
 .heroText strong{
 font-size:clamp(18px,2.6vw,24px);
 letter-spacing:-.02em;
 line-height:1;
 color:var(--n);
-font-weight:900}
+font-weight:900;
+position:relative;
+z-index:1}
 .heroText:hover{
 background:#e5f2f5;
-color:var(--b)}
+color:var(--b);
+border-color:var(--b);
+box-shadow:
+  0 0 28px rgba(201,71,19,.4),
+  0 0 52px rgba(255,150,80,.25),
+  0 10px 20px rgba(16,34,52,.1)}
 .mobileContactBar{
 display:none}
 .buttons{
