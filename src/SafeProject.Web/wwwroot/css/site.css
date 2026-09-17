@@ -43,6 +43,21 @@ font-size:10px;
 letter-spacing:.13em;
 display:flex;
 justify-content:space-between}
+.headerContact{
+display:flex;
+align-items:center;
+gap:8px;
+font-size:12px;
+font-weight:900;
+white-space:nowrap}
+.headerContact a{
+color:var(--b)}
+.headerContact a:hover{
+color:var(--o)}
+.headerContact i{
+color:#8fa5b1;
+font-style:normal;
+font-weight:700}
 header{
 height:82px;
 padding:0 5vw;
@@ -1111,6 +1126,9 @@ flex-wrap:wrap}
 @media(max-width:600px){
 .top span,.brand i{
 display:none}
+.headerContact{
+font-size:10px;
+gap:5px}
 header{
 height:68px;
 padding:0 4vw}

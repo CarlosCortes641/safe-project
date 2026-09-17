@@ -73,7 +73,11 @@
             <a href="/ops">@Lang.T("Ops", "Ops")</a>
         </nav>
         <a class="lang" href="@(path == "/" ? "/?lang=" : path + "?lang=")@Lang.OtherCode" aria-label="@Lang.T("Switch to Spanish", "Cambiar a inglés")">@Lang.ToggleLabel</a>
-        <a class="phone" href="tel:@CatalogStore.PhoneTel" aria-label="@Lang.T("Call Safe", "Llamar a Safe") @CatalogStore.PhoneDisplay">@CatalogStore.PhoneDisplay</a>
+        <div class="headerContact">
+            <a href="sms:@CatalogStore.TextTel">@Lang.T("Text", "Texto") @CatalogStore.TextShort</a>
+            <i aria-hidden="true">•</i>
+            <a href="tel:@CatalogStore.PhoneTel">@Lang.T("Call", "Llamar") @CatalogStore.PhonePlain</a>
+        </div>
     </header>
     @RenderBody()
     <div class="mobileContactBar" aria-label="@Lang.T("Contact options", "Opciones de contacto")">
