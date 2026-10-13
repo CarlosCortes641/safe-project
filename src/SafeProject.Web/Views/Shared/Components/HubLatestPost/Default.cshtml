@@ -1,0 +1,40 @@
+@using System.Globalization
+@model HubLatestPost
+@{
+    var hasImage = !string.IsNullOrWhiteSpace(Model.ImageUrl);
+    var culture = CultureInfo.GetCultureInfo(Lang.IsSpanish ? "es-US" : "en-US");
+    var body = (Model.Body ?? "").Trim();
+    var showMore = body.Length > 340;
+}
+<section class="hub-news" aria-label="@Lang.T("Latest news", "Última noticia")">
+    <div class="hub-news-inner">
+        <div class="hub-news-card@(hasImage ? " has-image" : "")">
+            <div class="hub-news-head">
+                <span class="hub-news-badge">@Lang.T("NEWS", "NOTICIA")</span>
+                <time datetime="@Model.PublishedUtc.UtcDateTime.ToString("yyyy-MM-dd")">@Model.PublishedUtc.ToLocalTime().ToString(Lang.IsSpanish ? "d 'de' MMMM, yyyy" : "MMMM d, yyyy", culture)</time>
+            </div>
+            <div class="hub-news-body">
+                @if (hasImage)
+                {
+                    <div class="hub-news-figure"><img src="@Model.ImageUrl" alt="" loading="lazy" /></div>
+                }
+                <div class="hub-news-copy">
+                    <h2 class="hub-news-title">@Model.Title</h2>
+                    @if (body.Length > 0)
+                    {
+                        <p class="hub-news-text">@body</p>
+                    }
+                    @if (showMore)
+                    {
+                        <details class="hub-news-more">
+                            <summary>
+                                <span class="hub-news-more-open">@Lang.T("Read the full story", "Leer la noticia completa")</span>
+                                <span class="hub-news-more-close">@Lang.T("Show less", "Mostrar menos")</span>
+                            </summary>
+                        </details>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

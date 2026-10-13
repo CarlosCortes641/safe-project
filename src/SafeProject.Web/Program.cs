@@ -13,6 +13,14 @@ builder.Services.AddControllersWithViews(options =>
 builder.Services.AddSingleton<SafeProject.Web.Catalog.CatalogStore>();
 builder.Services.AddSingleton<SafeProject.Web.Demo.DemoStore>();
 builder.Services.AddScoped<SafeProject.Web.Infrastructure.SiteLanguage>();
+builder.Services.AddMemoryCache();
+builder.Services.AddHttpClient(HubLatestPostClient.HttpClientName, client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["Updates:HubBaseUrl"]
+        ?? "https://indornews-a3efe8fnbjb2ercv.westus3-01.azurewebsites.net/");
+    client.Timeout = TimeSpan.FromSeconds(3);
+});
+builder.Services.AddSingleton<HubLatestPostClient>();
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor

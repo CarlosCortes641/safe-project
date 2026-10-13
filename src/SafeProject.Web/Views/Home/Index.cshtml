@@ -1,6 +1,7 @@
 @model HomeViewModel
 <main id="main-content">
     @await Html.PartialAsync("_SandboxBanner")
+    @await Component.InvokeAsync("HubLatestPost")
     <section class="hero">
         <div>
             <p>HVAC · WATER HEATERS · CHARLOTTE</p>

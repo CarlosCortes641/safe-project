@@ -21,7 +21,7 @@ public sealed class SecurityHeadersMiddleware
             "form-action 'self'; " +
             "object-src 'none'; " +
             "frame-ancestors 'none'; " +
-            "img-src 'self' data:; " +
+            "img-src 'self' data: https:; " +
             "style-src 'self'; " +
             "script-src 'self' 'unsafe-inline'; " +
             "upgrade-insecure-requests";
